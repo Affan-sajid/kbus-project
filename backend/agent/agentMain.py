@@ -194,3 +194,6 @@ print("📍 Current Location:", user["current"])
 #     currentloc = 'landmark world calicut kerala india '
 # elif if include map link 
 # else call gett to_addres
+
+
+

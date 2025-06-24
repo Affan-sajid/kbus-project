@@ -1,0 +1,762 @@
+/* --- Base Styles --- */
+
+/* :root is where we define global CSS variables for our entire application.
+   This makes it easy to manage our theme (colors, fonts, etc.) from one place. */
+:root {
+    --bg-color: #f4f7f9;
+    --panel-bg: #ffffff;
+    --text-color: #1a202c;
+    --subtle-text: #4a5568;
+    --border-color: #e2e8f0;
+    --accent-color: #3182ce;
+    --accent-light: #bee3f8;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* A universal reset to remove default browser margins and paddings, ensuring consistency. */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic styles for the body. We make it fill the full height and hide any overflow
+   to prevent scrollbars from appearing, as our layout is self-contained. */
+html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+}
+
+
+/* --- Layout Containers --- */
+
+/* The map container is positioned absolutely to fill the entire screen.
+   'z-index: 1' places it on the bottom layer of our visual stack. */
+#map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* The main UI container is positioned 'relative' to act as a stacking context.
+   'z-index: 2' places it *on top* of the map.
+   'pointer-events: none' is a clever trick: it makes this container transparent to mouse clicks,
+   so you can still interact with the map underneath it. We re-enable pointer-events on child elements. */
+.main-container {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    pointer-events: none;
+}
+
+
+/* --- Floating Search Bar --- */
+
+/* The search bar is positioned absolutely at the top of the screen. */
+.search-container {
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    right: 15px;
+    background: var(--panel-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px var(--shadow-color);
+    display: flex; /* Flexbox helps us align the icon, input, and button horizontally. */
+    align-items: center;
+    padding: 8px 15px;
+    pointer-events: auto; /* We re-enable clicks for the search bar itself. */
+}
+
+/* Simple styling for the search icon inside the bar. */
+.search-icon {
+    color: var(--subtle-text);
+    margin-right: 10px;
+}
+
+/* The input field takes up all available space. */
+.search-container input,
+gmp-place-autocomplete {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: transparent;
+}
+
+/* The location button on the right. */
+.location-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--accent-color);
+    cursor: pointer;
+    padding: 5px;
+}
+
+
+/* --- Bottom Sheet --- */
+
+/* The bottom sheet is positioned absolutely at the bottom of the screen. */
+#bottom-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--panel-bg);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.15); /* A shadow at the top to give it depth. */
+    pointer-events: auto; /* Enable clicks on the panel. */
+    max-height: 80vh; /* It can't be taller than 80% of the viewport height. */
+    transition: transform 0.4s cubic-bezier(.4,1.4,.6,1); /* This animates the sliding motion. */
+
+    /* This transform is the key to the 'peek' view. It moves the panel down by its own height,
+       then pulls it back up by 250px, leaving the top visible. */
+    transform: translateY(calc(100% - 250px));
+}
+
+/* When the panel is hovered or contains the active/focused element, it slides fully into view. */
+#bottom-sheet:focus-within, #bottom-sheet:hover {
+    transform: translateY(0);
+}
+
+/* The small gray handle at the top of the panel. */
+.handle {
+    width: 40px;
+    height: 5px;
+    background: var(--border-color);
+    border-radius: 2.5px;
+    margin: 10px auto;
+    cursor: grab;
+}
+
+/* The scrollable content area inside the panel. */
+#panel-content {
+    padding: 0 20px 30px;
+    overflow-y: auto;
+    max-height: calc(80vh - 45px); /* Ensure content doesn't overflow the panel. */
+}
+
+/* General styling for sections within the panel. */
+.panel-section {
+    margin-top: 25px;
+}
+
+.panel-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+
+/* --- Trip Planner Section --- */
+/* Specific styles for the inputs and button inside the trip planner. */
+#trip-planner .input-group {
+    margin-bottom: 15px;
+}
+#trip-planner label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--subtle-text);
+    margin-bottom: 5px;
+}
+#trip-planner input,
+#trip-planner gmp-place-autocomplete {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+}
+#trip-planner input:read-only {
+    background: #f7fafc; /* A slightly different background for the non-editable 'To' field. */
+}
+.go-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+/* --- Money Management & Favourites --- */
+/* Using flexbox to place the two cards side-by-side. */
+.card-container {
+    display: flex;
+    gap: 15px;
+}
+
+.card {
+    flex: 1; /* Each card takes up an equal amount of space. */
+    display: flex;
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+.card img {
+    height: 48px;
+    margin-bottom: 10px;
+}
+.card span {
+    font-weight: 500;
+    text-align: left;
+}
+
+/* Styling for the list of favorite routes. */
+.favourite-list .favourite-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.favourite-list .favourite-item:last-child {
+    border-bottom: none;
+}
+.favourite-icon {
+    font-size: 20px;
+    color: var(--accent-color);
+    background: var(--accent-light);
+    width: 40px;
+    height: 40px;
+    display: grid; /* A simple way to center the icon perfectly. */
+    place-items: center;
+    border-radius: 8px;
+}
+.favourite-details {
+    flex-grow: 1; /* Takes up the remaining space. */
+}
+.favourite-details strong {
+    font-size: 16px;
+}
+.favourite-details small {
+    display: block;
+    color: var(--subtle-text);
+}
+.favourite-price {
+    font-weight: 600;
+}
+
+
+/* --- Results Modal --- */
+
+/* The modal overlay covers the entire screen and is hidden by default. */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background. */
+    display: none; /* Initially hidden. */
+    align-items: center; /* These two properties perfectly center the modal. */
+    justify-content: center;
+    z-index: 1000; /* Ensures the modal is on top of everything else. */
+}
+/* The 'active' class is added by JavaScript to show the modal. */
+.modal-overlay.active {
+    display: flex;
+}
+.modal {
+    background: var(--bg-color);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 480px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column; /* Stacks the header, body, and footer vertically. */
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.modal-header h2 {
+    font-size: 20px;
+}
+.modal-close {
+    background: none; border: none; font-size: 24px;
+    font-weight: 300; cursor: pointer; color: var(--subtle-text);
+}
+.modal-body {
+    padding: 0 10px;
+    overflow-y: auto; /* Makes only the body of the modal scrollable if content overflows. */
+}
+.results-list .result-item {
+    background: var(--panel-bg);
+    border-radius: 12px;
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out; /* Smooth transition for hover and selection. */
+}
+/* When a result item has the 'selected' class (added via JS), we change its appearance. */
+.results-list .result-item.selected {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-light);
+    transform: translateY(-2px); /* Lifts the card slightly. */
+}
+.result-item .top-row, .result-item .mid-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.result-item .bus-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.result-item .bus-icon {
+    font-size: 20px;
+    color: var(--accent-color);
+}
+.result-item .bus-number {
+    font-weight: 600;
+    font-size: 18px;
+}
+.result-item .arrival-time {
+    font-size: 14px;
+    color: var(--subtle-text);
+}
+.result-item .route-info {
+    font-size: 14px;
+}
+.route-info strong {
+    color: var(--text-color);
+}
+.route-info span {
+    color: var(--subtle-text);
+}
+.result-item .price {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+}
+.confirm-btn {
+    width: 100%;
+    padding: 15px;
+    background: #48bb78; /* Green for confirmation. */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+/* --- Google Maps Autocomplete --- */
+/* We override Google's default styles to match our theme.
+   The '!important' flag is sometimes necessary to override inline styles set by the Google script. */
+.pac-container {
+    border: none !important;
+    box-shadow: 0 8px 25px var(--shadow-color) !important;
+    border-radius: 12px !important;
+    margin-top: 10px;
+}
+.pac-item {
+    padding: 12px 16px;
+    font-size: 16px;
+    border: none !important;
+}
+.pac-item:hover {
+    background-color: var(--accent-light) !important;
+}
+.pac-item-query {
+    font-weight: 500;
+}
+.pac-matched {
+    font-weight: 600;
+}
+
+
+/* --- Notifications --- */
+/* These are the pop-up messages for errors or success. */
+.notification {
+    position: fixed; /* Stays in the same place even if the page scrolls. */
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%); /* This is a trick to horizontally center a fixed element. */
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 2000; /* Must be on top of the modal. */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.notification.error {
+    background: #fed7d7; color: #c53030;
+}
+.notification.success {
+    background: #c6f6d5; color: #2f855a;
+}
+
+/* --- Expandable Search Area --- */
+.search-area {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+}
+.search-area form {
+    width: 100%;
+    max-width: 420px;
+    pointer-events: auto;
+}
+.search-row {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    border: 2px solid #e2e8f0;
+    transition: box-shadow 0.2s, border 0.2s;
+}
+
+.search-row:focus-within {
+    box-shadow: 0 12px 36px 0 rgba(49,130,206,0.18);
+    border: 2px solid #3182ce;
+}
+
+.search-row input {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    color: #222;
+    width: 100%;
+    outline: none;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 0;
+}
+
+.search-row .search-icon {
+    font-size: 22px;
+    color: #3182ce;
+    margin-right: 12px;
+}
+
+.search-expanded {
+    background: var(--panel-bg);
+    border-radius: 16px;
+    box-shadow: 0 8px 25px var(--shadow-color);
+    margin-top: 8px;
+    padding: 18px 18px 10px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    animation: expandDown 0.3s cubic-bezier(.4,1.4,.6,1);
+}
+
+@keyframes expandDown {
+    from { opacity: 0; transform: translateY(-10px) scaleY(0.95); }
+    to   { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: var(--subtle-text);
+    font-weight: 500;
+}
+
+.input-group .search-input {
+    padding: 12px 40px 12px 12px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 16px;
+    background: #f7fafc;
+    transition: border 0.2s;
+}
+
+.input-group .search-input:focus {
+    border-color: var(--accent-color);
+    background: #fff;
+}
+
+.input-group .location-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-15%);
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+}
+
+.input-group .location-btn:hover {
+    background: var(--accent-light);
+}
+
+/* --- Floating Find Bus Button --- */
+.floating-btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 110px;
+    z-index: 20;
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 18px 38px;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(49,130,206,0.18);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    display: block;
+}
+
+.floating-btn:active {
+    background: #274b7a;
+}
+
+/* --- Travel Plans Overlay --- */
+.travel-plans-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--bg-color);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.travel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 20px 10px 20px;
+    background: var(--panel-bg);
+    border-bottom: 1.5px solid var(--border-color);
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: var(--accent-color);
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.travel-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.travel-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 10px 90px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.travel-card {
+    background: var(--panel-bg);
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    padding: 18px 18px 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.travel-card.selected {
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 8px 24px rgba(49,130,206,0.13);
+}
+
+.travel-card .card-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+.travel-card .bus-icon {
+    font-size: 22px;
+    color: var(--accent-color);
+}
+
+.travel-card .route-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.travel-card .times {
+    font-size: 15px;
+    color: var(--subtle-text);
+}
+
+.travel-card .details {
+    display: flex;
+    gap: 18px;
+    font-size: 14px;
+    color: var(--subtle-text);
+}
+
+.travel-card .fare {
+    font-weight: 700;
+    color: #38a169;
+    font-size: 16px;
+}
+
+.confirm-btn {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    max-width: 480px;
+    margin: 0 auto 0 auto;
+    background: #38a169;
+    color: #fff;
+    border: none;
+    border-radius: 0 0 18px 18px;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 22px 0 18px 0;
+    box-shadow: 0 -4px 24px rgba(56,161,105,0.13);
+    z-index: 1002;
+    display: block;
+    transition: background 0.2s;
+}
+
+.confirm-btn:active {
+    background: #276749;
+}
+
+/* --- Adjust Bottom Sheet for New Flow --- */
+#bottom-sheet.collapsed {
+    transform: translateY(195px);
+}
+
+#bottom-sheet.expanded {
+    transform: translateY(0);
+}
+
+/* --- Bottom Sheet Hidden --- */
+#bottom-sheet.hidden {
+    transform: translateY(calc(100% - 30px));
+}
+
+/* --- Hide Modal Overlay (legacy) --- */
+.modal-overlay { display: none !important; }
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    .search-area form { max-width: 98vw; }
+    .floating-btn { bottom: 90px; }
+    .confirm-btn { font-size: 16px; padding: 18px 0 14px 0; }
+}
+
+
+
+/* --- Bottom Button --- */
+.bottom-btn {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 80vw;
+    max-width: 480px;
+    margin: 0 auto 0 auto;
+    background: #cdcccc;
+    color: #a19d9d;
+    border: 1px dashed #878585; /* White border for separation */
+    border-radius: 24px;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 20px 0;
+    z-index: 1002;
+    display: block;
+    transition: 
+      background 0.2s,
+      box-shadow 0.2s,
+      transform 0.15s;
+    cursor: pointer;
+    pointer-events: auto;
+    transform: translateY(-50px);
+    /* Strong, blurred black shadow for floating effect */
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.35), 0 2px 8px 0 rgba(0,0,0,0.10);
+}
+
+.bottom-btn:active,
+.bottom-btn.enabled {
+    background: linear-gradient(90deg, #2563eb 0%, #3182ce 100%);
+    transform: translateY(-52px) scale(0.98);
+    color: #fff;
+    border: 1px solid #fff; /* White border for separation */
+}
+
+.bottom-btn:hover,
+.bottom-btn.enabled:hover {
+    box-shadow: 0 16px 48px 0 rgba(0,0,0,0.45), 0 4px 12px 0 rgba(0,0,0,0.13);
+    filter: brightness(1.08);
+}
+
+/* Remove floating-btn styles if present */
+.floating-btn { display: none !important; }
+
+/* Ensure overlay is above all */
+.travel-plans-overlay {
+  z-index: 2000;
+}
+
+/* .search-expanded: From above To */
+.search-expanded {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.search-expanded .input-group:first-child { order: 1; }
+.search-expanded .input-group:last-child { order: 2; }
