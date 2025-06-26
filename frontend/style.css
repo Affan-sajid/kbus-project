@@ -23,10 +23,15 @@
 /* Basic styles for the body. We make it fill the full height and hide any overflow
    to prevent scrollbars from appearing, as our layout is self-contained. */
 html, body {
-    height: 100%;
-    overflow: hidden;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Prevents scrolling the whole page. */
+    -webkit-tap-highlight-color: transparent; /* Removes blue tap highlight on mobile. */
 }
 
 
@@ -760,3 +765,211 @@ gmp-place-autocomplete {
 
 .search-expanded .input-group:first-child { order: 1; }
 .search-expanded .input-group:last-child { order: 2; }
+
+
+
+
+/* .route-card .up
+.route-card .busname 
+.route-card .busname .icon 
+.route-card .busname .icon img 
+.route-card .busname .text 
+.route-card .fare 
+.route-card .fare .rupeesign 
+.route-card .fare .rupeesign  img
+.route-card .faretext 
+.route-card .down
+.route-card .details
+.route-card .details .arrival 
+route-card .details .arrival .icon {}
+.route-card .details .arrival .icon img {}
+.route-card .details .arrival .arrivatext {}
+.route-card .details .duration  {}
+.route-card .details .duration .icon {}
+.route-card .details .duration .icon img {}
+.route-card .details .duration .durationtext {}
+.route-card .busroute {}
+.route-card .busroute .center {}
+.route-card .busroute .center .object {}
+.route-card .right {}
+.route-card .right span {}
+.route-card .right .time {}
+
+ */
+
+
+
+
+
+
+
+.route-card {
+    display: flex;
+    flex-direction: row;
+    background: var(--panel-bg, #fff);
+    border-radius: 16px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    margin-bottom: 16px;
+    padding: 0;
+    overflow: hidden;
+    border: 1.5px solid var(--border-color, #EEEFEF);
+    min-height: 126px;
+  }
+  
+  .route-card .left {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 13px 8px;
+    gap: 8px;
+    height: 100%;
+  }
+  /* .route-card .left{
+    display: flex;
+    flex-direction: row;
+    background: var(--panel-bg, #fff);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 16px;
+    padding: 0;
+    overflow: hidden;
+    border: 1.5px solid var(--border-color, #e2e8f0);
+    min-height: 120px;
+    
+} */
+  
+  .route-card .up {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+    /* height: 52px; */
+  
+
+    /* margin-bottom: 8px; */
+  }
+  
+  .route-card .busname {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .route-card .busname .icon img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+  .route-card .busname .text {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-color, #222);
+  }
+  
+  .route-card .fare {
+    display: flex;
+    /* align-items: center; */
+    gap: 1px;
+  }
+  .route-card .rupeesign img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+  .route-card .faretext {
+    font-size: 16px;
+    font-weight: 700;
+    color: #38a169;
+  }
+  
+  .route-card .down {
+    height:58px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-ar;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
+    /* height: 100%; */
+  }
+  .route-card .details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--subtle-text, #718096);
+    width: 134px;
+    padding: 8px 0px;
+    background: #000;
+  }
+  .route-card .arrival {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .route-card .arrival .icon img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+  .route-card .duration {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .route-card .duration .icon img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+  .route-card .busroute {
+    display: flex;
+    align-items: center;
+    background: #000;
+    padding: 8px 0 ;
+    height: 100%;
+    flex-grow: 1;
+    /* width: 80%; */
+    justify-content: center;
+    
+
+  }
+  .route-card .center {
+    display: flex;
+    gap: 4px;
+    background: #f00;
+    height: 100%;
+    align-items: center;
+  }
+  .route-card .object {
+    width: 30px;
+    height: 30px;
+    background: var(--accent-color, #3182ce);
+    border-radius: 5px;
+    /* margin: 0 2px; */
+  }
+  
+  .route-card .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f7fafc;
+    max-width: 50px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent-color, #3182ce);
+    border-left: 1.5px solid var(--border-color, #e2e8f0);
+  }
+  .route-card .right span:first-child {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .route-card .right span:last-child {
+    font-size: 13px;
+    color: var(--subtle-text, #718096);
+  }
+    

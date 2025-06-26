@@ -10,7 +10,7 @@
     <!-- Our custom styles for the entire app. -->
     <link rel="stylesheet" href="style.css">
     <!-- The "Inter" font family from Google Fonts for a clean look. -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons (like the search and location icons). -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
 </head>
@@ -101,6 +101,73 @@
             <h2>Travel Plans</h2>
         </div>
         <div class="travel-list" id="travelList">
+            <div class="travel-card">
+                <div class="card-row">
+                    <span class="bus-icon"><i class="fas fa-bus"></i></span>
+                    <span class="route-name">$bus_number</span>
+                    <span class="fare">.fare</span>
+                </div>
+                <div class="card-row times">
+                    <span>Dep: departure</span>
+                    <span>Arr: arrival</span>
+                    <span>duration</span>
+                </div>
+                <div class="details">
+                    <span>line 1</span>
+                    <span>line 2 </span>
+                </div>
+             </div>
+             <div class="route-card">
+                <div class="left">
+                    <div class="up">
+                        <div class="busname">
+                            <span class="icon">
+                                <img src="assets/Frame 26.png" alt="">
+                            </span>
+                            <span class="text">Bus Name</span>
+                        </div>
+                        <div class="fare">
+                            <span class="rupeesign">
+                                <img src="assets/Frame 16.png" alt="">
+                            </span>
+                            <span class="faretext">30</span>
+                        </div>
+                    </div>
+                    <div class="down">
+                        <div class="details">
+
+                            <div class="arrival">
+                                <span class="icon">
+                                    <img src="assets/Arrow.png" alt="">
+                                </span>
+                                <span class="arrivatext">
+                                    Arrival : 4:30 Pm
+                                </span>
+                            </div>
+
+                            <div class="duration">
+                                <span class="icon">
+                                    <img src="assets/clock.png" alt="clock">
+                                </span>
+                                <span class="durationtext">Duration : 1h</span>
+                            </div>
+                        </div>
+                        <div class="busroute">
+                            <div class="center">
+                                <div class="object"></div>
+                                <div class="object"></div>
+                                <div class="object"></div>
+                                <div class="object"></div>
+                                <div class="object"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+                    <span class="time">10</span>
+                    <span>min</span>
+                </div>
+             </div>
             <!-- Route cards will be injected here -->
         </div>
         <button id="confirmTripBtn" class="confirm-btn" style="display: none;">Confirm</button>

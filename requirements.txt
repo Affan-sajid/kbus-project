@@ -3,3 +3,5 @@ ipykernel
 python-dotenv
 openai
 pydantic
+Flask
+flask_cors 

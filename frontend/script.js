@@ -55,6 +55,8 @@ class SimpleBusTimeFinder {
         this.setupAutocomplete();
         this.setupEvents();
         this.showCollapsedSearch();
+        this.showOverlay();
+
     }
 
     // Set up the Google Map
@@ -292,7 +294,7 @@ class SimpleBusTimeFinder {
         this.state.overlayOpen = true;
         this.ui.overlay.style.display = 'flex';
         this.ui.bottomSheet.classList.add('hidden');
-        this.renderTravelPlans();
+        // this.renderTravelPlans();
     }
 
     // Hide the overlay and go back to expanded search
