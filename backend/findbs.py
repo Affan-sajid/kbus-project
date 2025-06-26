@@ -1,3 +1,6 @@
+from tracemalloc import stop
+
+
 SAMPLE_DATA = {
     "bus_stops": [
         {
@@ -114,9 +117,34 @@ SAMPLE_DATA = {
         }
     ]
 }
-st
+#
+# ---- init----
+stops = {}
+routes = {}
+stop_routes = {}
 
+# ---- load data ----
 for stop_data in SAMPLE_DATA["bus_stops"]:
-    stops[]
+    stops[stop_data["stop_id"]] = stop_data
 
 
+for route_data in SAMPLE_DATA["bus_routes"]:
+    routes[route_data["route_id"]] = route_data
+
+    for stop_id in route_data["stops"]:
+        if stop_id not in stop_routes:
+            stop_routes[stop_id] = []
+        stop_routes[stop_id].append(route_data["route_id"])
+
+# ---- build route graph ----
+route_graph={}
+for stop_id in stops.keys():
+    route_graph[stop_id] = []
+    print(stop_id)
+    
+    for route_id in stop_routes.get(stop_id,[]):
+        print(route_id)
+        # route -  routes
+
+print(routes)
+print(stops)

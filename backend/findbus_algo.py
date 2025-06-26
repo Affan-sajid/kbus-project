@@ -575,7 +575,7 @@ def main():
         choice = input("Enter your choice (1-5): ").strip()
         
         if choice == "1":
-            # Find routes between coordinates using full algorithm
+            # Find routes between coordinates using ful l algorithm
             print("\n📍 ORIGIN LOCATION:")
             origin_lat, origin_lon = get_coordinates()
             if origin_lat is None:
