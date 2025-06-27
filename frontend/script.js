@@ -126,6 +126,8 @@ class SimpleBusTimeFinder {
                 this.setMarker('to', place.geometry.location);
                 this.map.panTo(place.geometry.location);
                 this.map.setZoom(15);
+                // Store essential place data
+                this.storePlaceData('to', place);
             }
         });
         // Origin (From)
@@ -137,6 +139,8 @@ class SimpleBusTimeFinder {
             const place = this.fromAutocomplete.getPlace();
             if (place && place.geometry) {
                 this.setMarker('from', place.geometry.location);
+                // Store essential place data
+                this.storePlaceData('from', place);
             }
         });
     }
@@ -168,6 +172,8 @@ class SimpleBusTimeFinder {
                         this.setMarker('from', loc);
                         this.map.setCenter(loc);
                         this.map.setZoom(15);
+                        // Store current location as place data
+                        this.storeCurrentLocationData(loc);
                     },
                     () => this.showNotification('Could not get your location.', 'error')
                 );
@@ -281,7 +287,7 @@ class SimpleBusTimeFinder {
             const response = await geocoder.geocode({ location });
             if (response.results[0]) {
                 this.ui.fromInput.value = '';
-                this.ui.fromInput.setAttribute('data-actual-address', response.results[0].formatted_address);
+                this.ui.fromInput.setAttribute('data-current-address', response.results[0].formatted_address);
                 this.ui.fromInput.setAttribute('placeholder', `current location - ${response.results[0].formatted_address}`);
             }
         } catch (e) {
@@ -291,10 +297,56 @@ class SimpleBusTimeFinder {
 
     // Show the travel plans overlay
     showOverlay() {
+        // Validate inputs before proceeding
+        // let fromLocation = this.ui.fromInput.value.trim();
+        // const toLocation = this.ui.toInput.value.trim();
+        // const currentAddress = this.ui.fromInput.getAttribute('data-current-address');
+        
+        // // Get structured place data
+        // let fromPlaceData = this.ui.fromInput.getAttribute('data-place-data');
+        // const toPlaceData = this.ui.toInput.getAttribute('data-place-data');
+        
+        // // Check if "to" location is empty
+        // if (!toLocation) {
+        //     this.showNotification('Please enter a destination', 'error');
+        //     return;
+        // }
+        
+        // // Check if "from" location is empty
+        // if (!fromLocation) {
+        //     // If no from location entered, check if we have current location
+        //     if (!currentAddress) {
+        //         this.showNotification('Please enter a starting location or use current location', 'error');
+        //         return;
+        //     }
+        //     // Use current location if available
+        //     fromLocation = currentAddress;
+        //     // Get current location place data if available
+        //     if (this.state.currentLocation) {
+        //         fromPlaceData = JSON.stringify({
+        //             place_id: null,
+        //             name: 'Current Location',
+        //             formatted_address: currentAddress,
+        //             coordinates: {
+        //                 lat: this.state.currentLocation.lat,
+        //                 lng: this.state.currentLocation.lng
+        //             }
+        //         });
+        //     }
+        // }
+
+        let fromLocation = this.ui.fromInput.value.trim();
+        const toLocation = this.ui.toInput.value.trim();
+        const currentAddress = this.ui.fromInput.getAttribute('data-current-address');
+        
+        // Get structured place data
+        let fromPlaceData = this.ui.fromInput.getAttribute('data-place-data');
+        const toPlaceData = this.ui.toInput.getAttribute('data-place-data');
+        
         this.state.overlayOpen = true;
         this.ui.overlay.style.display = 'flex';
         this.ui.bottomSheet.classList.add('hidden');
-        // this.renderTravelPlans();
+        this.renderTravelPlans(fromLocation, toLocation, fromPlaceData, toPlaceData);
     }
 
     // Hide the overlay and go back to expanded search
@@ -305,39 +357,110 @@ class SimpleBusTimeFinder {
         this.showExpandedSearch();
     }
 
-    // Show a list of possible bus routes (mock data)
-    renderTravelPlans() {
-        // Example routes (replace with real data from backend later)
-        const routes = [
-            { bus_number: "Bus Nº 31", route: "A → B", departure: "16:00", arrival: "17:00", duration: "1h", transfers: 0, fare: "₹30" },
-            { bus_number: "Central Line", route: "A → C → B", departure: "16:15", arrival: "17:30", duration: "1h 15m", transfers: 1, fare: "₹25" },
-            { bus_number: "Tram Nº 17", route: "A → D → B", departure: "16:20", arrival: "17:40", duration: "1h 20m", transfers: 2, fare: "₹20" },
-        ];
-        this.ui.travelList.innerHTML = '';
-        routes.forEach((route) => {
-            const card = document.createElement('div');
-            card.className = 'travel-card';
-            card.innerHTML = `
-                <div class="card-row">
-                    <span class="bus-icon"><i class="fas fa-bus"></i></span>
-                    <span class="route-name">${route.bus_number}</span>
-                    <span class="fare">${route.fare}</span>
+    // Show a list of possible bus routes (fetch from backend)
+    async renderTravelPlans(fromLocation, toLocation, fromPlaceData, toPlaceData) {
+        try {
+            // Show loading state
+            this.ui.travelList.innerHTML = '<div class="loading">Finding routes...</div>';
+            
+            // Fetch routes from backend
+            const response = await fetch('http://localhost:8000/find_buses', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    from: fromLocation,
+                    to: toLocation,
+                    fromPlaceData: fromPlaceData,
+                    toPlaceData: toPlaceData
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            const routes = data.routes || [];
+            
+            // Clear loading and render routes
+            this.ui.travelList.innerHTML = '';
+            
+            if (routes.length === 0) {
+                this.ui.travelList.innerHTML = '<div class="no-routes">No routes found for this journey.</div>';
+                return;
+            }
+            
+            routes.forEach((route) => {
+                
+                console.log(route.plan)
+                console.log(routes)
+                
+
+                const card = document.createElement('div');
+                card.className = 'route-card';
+                card.innerHTML = `
+                   <div class="left">
+                    <div class="up">
+                        <div class="busname">
+                            <span class="icon">
+                                <img src="assets/Frame 26.png" alt="">
+                            </span>
+                            <span class="text">${route.bus_name}</span>
+                        </div>
+                        <div class="fare">
+                            <span class="faretext">${route.fare}</span>
+                        </div>
+                    </div>
+                    <div class="down">
+                        <div class="details">
+
+                            <div class="arrival">
+                                <span class="icon">
+                                    <img src="assets/Arrow.png" alt="">
+                                </span>
+                                <span class="arrivatext">
+                                    Arrival : ${route.arrival}
+                                </span>
+                            </div>
+
+                            <div class="duration">
+                                <span class="icon">
+                                    <img src="assets/clock.png" alt="clock">
+                                </span>
+                                <span class="durationtext">Duration : ${route.duration}</span>
+                            </div>
+                        </div>
+                        <div class="busroute">
+                            <div class="center">
+                                ${route.plan.map(planpart => `
+                                    <div class="object">
+                                        <img src="assets/icons/${planpart.type}.png" alt="">
+                                        <span>${planpart.distance}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-row times">
-                    <span>Dep: ${route.departure}</span>
-                    <span>Arr: ${route.arrival}</span>
-                    <span>${route.duration}</span>
+                <div class="right">
+                    <span class="time">${route.departure_in}</span>
+                    <span>min</span>
                 </div>
-                <div class="details">
-                    <span>${route.transfers === 0 ? 'Direct' : `Change ${route.transfers} time${route.transfers > 1 ? 's' : ''}`}</span>
-                    <span>${route.route}</span>
-                </div>
-            `;
-            card.addEventListener('click', () => this.selectRoute(card, route));
-            this.ui.travelList.appendChild(card);
-        });
-        this.state.selectedRoute = null;
-        this.ui.confirmBtn.style.display = 'none';
+                `;
+                card.addEventListener('click', () => this.selectRoute(card, route));
+                this.ui.travelList.appendChild(card);
+            });
+            
+            this.state.selectedRoute = null;
+            this.ui.confirmBtn.style.display = 'none';
+            
+        } catch (error) {
+            console.error('Error fetching routes:', error);
+            this.ui.travelList.innerHTML = '<div class="error">Failed to load routes. Please try again.</div>';
+            this.showNotification('Failed to load routes. Please check your connection.', 'error');
+        }
     }
 
     // When a route card is clicked, highlight it and show confirm button
@@ -365,6 +488,53 @@ class SimpleBusTimeFinder {
         document.body.appendChild(note);
         setTimeout(() => note.remove(), 4000);
     }
+
+    // Store essential place data from Google Places API
+    storePlaceData(type, place) {
+        // Create a clean place object with only essential data
+        const placeData = {
+            place_id: place.place_id,
+            name: place.name,
+            formatted_address: place.formatted_address,
+            coordinates: {
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng()
+            }
+        };
+        
+        // Store as JSON string in data attribute
+        const input = type === 'from' ? this.ui.fromInput : this.ui.toInput;
+        input.setAttribute('data-place-data', JSON.stringify(placeData));
+        
+        // Also store coordinates separately for backward compatibility
+        input.setAttribute('data-lat', place.geometry.location.lat());
+        input.setAttribute('data-lng', place.geometry.location.lng());
+        
+        console.log(`${type.toUpperCase()} Place Data:`, placeData);
+    }
+    
+    // Store current location as place data
+    storeCurrentLocationData(location) {
+        // Create a clean place object with only essential data
+        const placeData = {
+            place_id: null,
+            name: 'Current Location',
+            formatted_address: this.ui.fromInput.getAttribute('data-current-address') || 'Current Location',
+            coordinates: {
+                lat: location.lat,
+                lng: location.lng
+            }
+        };
+        
+        // Store as JSON string in data attribute
+        this.ui.fromInput.setAttribute('data-place-data', JSON.stringify(placeData));
+        
+        // Also store coordinates separately for backward compatibility
+        this.ui.fromInput.setAttribute('data-lat', location.lat);
+        this.ui.fromInput.setAttribute('data-lng', location.lng);
+        
+        console.log('Current Location Data:', placeData);
+    }
 }
 
 // If Google Maps fails to load, show an error in the console
@@ -380,3 +550,22 @@ window.addEventListener('error', (e) => {
 //     document.querySelectorAll('.page-section').forEach(div => div.classList.remove('active'));
 //     document.getElementById(pageId).classList.add('active');
 //   }
+
+
+
+{/* <div class="object">
+                                    <img src="assets/icons/bus.png" alt="">
+                                    <span>20m</span>
+                                </div>
+                                <div class="object">
+                                    <img src="assets/icons/taxi.png" alt="">
+                                    <span>ro</span>
+                                </div>
+                                <div class="object">
+                                    <img src="assets/icons/walk.png" alt="">
+                                    <span>Text</span>
+                                </div>
+                                <div class="object">
+                                    <img src="assets/icons/auto.png" alt="">
+                                    <span>Text</span>
+                                </div> */}

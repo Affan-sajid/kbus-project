@@ -995,3 +995,56 @@ route-card .details .arrival .icon {}
     /* color: var(--subtle-text, #718096); */
   }
     
+/* --- Loading and Error States --- */
+.loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--subtle-text);
+    font-size: 16px;
+}
+
+.loading::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top: 3px solid var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.no-routes {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--subtle-text);
+    font-size: 16px;
+}
+
+.no-routes::before {
+    content: '🚌';
+    display: block;
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.error {
+    text-align: center;
+    padding: 40px 20px;
+    color: #e53e3e;
+    font-size: 16px;
+}
+
+.error::before {
+    content: '⚠️';
+    display: block;
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+    
