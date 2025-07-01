@@ -1,0 +1,219 @@
+{
+  "bus_stops": [
+    {
+      "stop_id": "BS001",
+      "stop_name": "Central Bus Stand",
+      "latitude": 11.2581,
+      "longitude": 75.7806,
+      "address": "Main Road, Kozhikode",
+      "landmark": "Near District Collectorate",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS002",
+      "stop_name": "Moffusil Bus Stand",
+      "latitude": 11.2587066,
+      "longitude": 75.7869567,
+      "address": "Palayam, Kozhikode",
+      "landmark": "Near Moffusil Police Station",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS003",
+      "stop_name": "Thondayad Junction",
+      "latitude": 11.2901,
+      "longitude": 75.8061,
+      "address": "Thondayad, Kozhikode",
+      "landmark": "Near Cyber Park",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS004",
+      "stop_name": "Medical College Bus Stop",
+      "latitude": 11.2714511,
+      "longitude": 75.8382894,
+      "address": "Medical College Road, Kozhikode",
+      "landmark": "Near Kozhikode Medical College",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS005",
+      "stop_name": "Ramanattukara Bus Stop",
+      "latitude": 11.2189,
+      "longitude": 75.8315,
+      "address": "Feroke, Kozhikode",
+      "landmark": "Near Ramanattukara Panchayat Office",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS006",
+      "stop_name": "Kallai Railway Station Bus Stop",
+      "latitude": 11.2461,
+      "longitude": 75.7847,
+      "address": "Kallai, Kozhikode",
+      "landmark": "Near Kallai Railway Station",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS007",
+      "stop_name": "Vellayil Bus Stop",
+      "latitude": 11.2386,
+      "longitude": 75.7925,
+      "address": "Vellayil, Kozhikode",
+      "landmark": "Near Vellayil Post Office",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS008",
+      "stop_name": "Panniyankara Bus Stop",
+      "latitude": 11.2537,
+      "longitude": 75.7835,
+      "address": "Panniyankara, Kozhikode",
+      "landmark": "Near Panniyankara Bhagavati Temple",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS009",
+      "stop_name": "West Nadakkavu Bus Stop",
+      "latitude": 11.2635,
+      "longitude": 75.7885,
+      "address": "Nadakkavu, Kozhikode",
+      "landmark": "Near Providence Women's College",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS010",
+      "stop_name": "Vengeri Bus Stop",
+      "latitude": 11.2588,
+      "longitude": 75.8011,
+      "address": "Vengeri, Kozhikode",
+      "landmark": "Near Vengeri Post Office",
+      "district": "Kozhikode"
+    }
+  ],
+  "bus_routes": [
+    {
+      "route_id": "R001",
+      "route_number": "1A",
+      "route_name": "Central - Medical College Express",
+      "stops": [
+        "BS001",
+        "BS003",
+        "BS004"
+      ],
+      "operator": "KSRTC",
+      "route_type": "express",
+      "frequency_minutes": 30,
+      "first_bus_time": "06:00",
+      "last_bus_time": "22:00",
+      "travel_time_between_stops": 8
+    },
+    {
+      "route_id": "R002",
+      "route_number": "2B",
+      "route_name": "Moffusil - Vengeri Ordinary",
+      "stops": [
+        "BS002",
+        "BS009",
+        "BS010"
+      ],
+      "operator": "Private",
+      "route_type": "ordinary",
+      "frequency_minutes": 20,
+      "first_bus_time": "06:30",
+      "last_bus_time": "21:30",
+      "travel_time_between_stops": 5
+    },
+    {
+      "route_id": "R003",
+      "route_number": "3C",
+      "route_name": "Thondayad - Kallai Local",
+      "stops": [
+        "BS003",
+        "BS006",
+        "BS008"
+      ],
+      "operator": "KSRTC",
+      "route_type": "ordinary",
+      "frequency_minutes": 15,
+      "first_bus_time": "06:15",
+      "last_bus_time": "22:15",
+      "travel_time_between_stops": 4
+    },
+    {
+      "route_id": "R004",
+      "route_number": "4D",
+      "route_name": "Central - Ramanattukara Express",
+      "stops": [
+        "BS001",
+        "BS005"
+      ],
+      "operator": "Private",
+      "route_type": "express",
+      "frequency_minutes": 45,
+      "first_bus_time": "06:45",
+      "last_bus_time": "21:45",
+      "travel_time_between_stops": 8
+    },
+    {
+      "route_id": "R005",
+      "route_number": "5E",
+      "route_name": "Medical College - Vellayil Circular",
+      "stops": [
+        "BS004",
+        "BS007"
+      ],
+      "operator": "KSRTC",
+      "route_type": "ordinary",
+      "frequency_minutes": 30,
+      "first_bus_time": "07:00",
+      "last_bus_time": "22:00",
+      "travel_time_between_stops": 6
+    },
+    {
+      "route_id": "R006",
+      "route_number": "6F",
+      "route_name": "Moffusil - Panniyankara Limited",
+      "stops": [
+        "BS002",
+        "BS008"
+      ],
+      "operator": "Private",
+      "route_type": "limited",
+      "frequency_minutes": 50,
+      "first_bus_time": "07:30",
+      "last_bus_time": "22:30",
+      "travel_time_between_stops": 7
+    },
+    {
+      "route_id": "R007",
+      "route_number": "7G",
+      "route_name": "Thondayad - West Nadakkavu Ordinary",
+      "stops": [
+        "BS003",
+        "BS009"
+      ],
+      "operator": "KSRTC",
+      "route_type": "ordinary",
+      "frequency_minutes": 40,
+      "first_bus_time": "07:45",
+      "last_bus_time": "21:45",
+      "travel_time_between_stops": 5
+    },
+    {
+      "route_id": "R008",
+      "route_number": "8H",
+      "route_name": "Ramanattukara - Vengeri Express",
+      "stops": [
+        "BS005",
+        "BS010"
+      ],
+      "operator": "Private",
+      "route_type": "express",
+      "frequency_minutes": 35,
+      "first_bus_time": "08:00",
+      "last_bus_time": "22:00",
+      "travel_time_between_stops": 8
+    }
+  ]
+}

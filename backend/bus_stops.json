@@ -1,0 +1,58 @@
+[
+    {
+        "stop_id": "BS001",
+        "stop_name": "Central Station",
+        "latitude": 11.2581972,
+        "longitude": 75.78645879999999,
+        "address": "Central Station Rd, Kozhikode"
+    },
+    {
+        "stop_id": "BS002", 
+        "stop_name": "Medical College",
+        "latitude": 11.2496,
+        "longitude": 75.7666,
+        "address": "Medical College Rd, Kozhikode"
+    },
+    {
+        "stop_id": "BS003",
+        "stop_name": "Palayam Market",
+        "latitude": 11.2588,
+        "longitude": 75.7714,
+        "address": "Palayam, Kozhikode"
+    },
+    {
+        "stop_id": "BS004",
+        "stop_name": "Beach Road",
+        "latitude": 11.2750,
+        "longitude": 75.7747,
+        "address": "Beach Rd, Kozhikode"
+    },
+    {
+        "stop_id": "BS005",
+        "stop_name": "University",
+        "latitude": 11.1340267,
+        "longitude": 75.89523539999999,
+        "address": "Calicut University, Malappuram"
+    },
+    {
+        "stop_id": "BS006",
+        "stop_name": "Airport Junction",
+        "latitude": 11.1410,
+        "longitude": 75.9550,
+        "address": "Airport Rd, Kozhikode"
+    },
+    {
+        "stop_id": "BS007",
+        "stop_name": "Private Bus Stand",
+        "latitude": 11.2480,
+        "longitude": 75.7763,
+        "address": "Mavoor Rd, Kozhikode"
+    },
+    {
+        "stop_id": "BS008",
+        "stop_name": "KSRTC Bus Stand",
+        "latitude": 11.2447,
+        "longitude": 75.7730,
+        "address": "Mavoor Rd, Kozhikode"
+    }
+] 

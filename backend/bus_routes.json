@@ -1,0 +1,74 @@
+[
+    {
+        "route_id": "R001",
+        "route_number": "1A",
+        "route_name": "Central Station - Airport",
+        "stops": ["BS001", "BS003", "BS002", "BS005", "BS006"],
+        "operator": "KSRTC",
+        "route_type": "ordinary",
+        "frequency_minutes": 30,
+        "first_bus_time": "06:00",
+        "last_bus_time": "22:00",
+        "travel_time_between_stops": 5
+    },
+    {
+        "route_id": "R002", 
+        "route_number": "1B",
+        "route_name": "Airport - Central Station",
+        "stops": ["BS006", "BS005", "BS002", "BS003", "BS001"],
+        "operator": "KSRTC",
+        "route_type": "ordinary",
+        "frequency_minutes": 30,
+        "first_bus_time": "06:30",
+        "last_bus_time": "22:30",
+        "travel_time_between_stops": 5
+    },
+    {
+        "route_id": "R003",
+        "route_number": "2",
+        "route_name": "Beach Road Circular",
+        "stops": ["BS001", "BS004", "BS003", "BS007", "BS008", "BS001"],
+        "operator": "Private",
+        "route_type": "ordinary",
+        "frequency_minutes": 20,
+        "first_bus_time": "06:15",
+        "last_bus_time": "21:45",
+        "travel_time_between_stops": 4
+    },
+    {
+        "route_id": "R004",
+        "route_number": "5E",
+        "route_name": "Express - Central to University",
+        "stops": ["BS001", "BS002", "BS005"],
+        "operator": "KSRTC",
+        "route_type": "express",
+        "frequency_minutes": 60,
+        "first_bus_time": "07:00",
+        "last_bus_time": "20:00",
+        "travel_time_between_stops": 8
+    },
+    {
+        "route_id": "R005",
+        "route_number": "5E-R",
+        "route_name": "Express - University to Central",
+        "stops": ["BS005", "BS002", "BS001"],
+        "operator": "KSRTC",
+        "route_type": "express",
+        "frequency_minutes": 60,
+        "first_bus_time": "07:30",
+        "last_bus_time": "20:30",
+        "travel_time_between_stops": 8
+    },
+    {
+        "route_id": "R006",
+        "route_number": "3",
+        "route_name": "Medical College - Beach Road",
+        "stops": ["BS002", "BS003", "BS004"],
+        "operator": "Private",
+        "route_type": "ordinary",
+        "frequency_minutes": 45,
+        "first_bus_time": "06:45",
+        "last_bus_time": "21:30",
+        "travel_time_between_stops": 6
+    }
+] 

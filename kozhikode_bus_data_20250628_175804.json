@@ -1,0 +1,247 @@
+{
+  "bus_stops": [
+    {
+      "stop_id": "BS001",
+      "stop_name": "Central Bus Stand",
+      "latitude": 11.2581,
+      "longitude": 75.7806,
+      "address": "Main Road, Kozhikode",
+      "landmark": "Near District Collectorate",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS002",
+      "stop_name": "Mavoor Road Junction",
+      "latitude": 11.2588202,
+      "longitude": 75.7804666,
+      "address": "Mavoor Road, Kozhikode",
+      "landmark": "Near Focus Mall",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS003",
+      "stop_name": "Thondayad Junction",
+      "latitude": 11.2804,
+      "longitude": 75.787,
+      "address": "Thondayad, Kozhikode",
+      "landmark": "Near Cyber Park",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS004",
+      "stop_name": "Calicut Medical College Bus Stop",
+      "latitude": 11.1935,
+      "longitude": 75.8376,
+      "address": "Medical College Campus, Kozhikode",
+      "landmark": "Near Calicut Medical College",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS005",
+      "stop_name": "Kozhikode Railway Station Bus Stop",
+      "latitude": 11.2581,
+      "longitude": 75.7806,
+      "address": "Link Road, Kozhikode",
+      "landmark": "Near Kozhikode Railway Station",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS006",
+      "stop_name": "Palayam Market Bus Stop",
+      "latitude": 11.2581,
+      "longitude": 75.7806,
+      "address": "Palayam, Kozhikode",
+      "landmark": "Near Palayam Market",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS007",
+      "stop_name": "Beypore Port Bus Stop",
+      "latitude": 11.1764,
+      "longitude": 75.801,
+      "address": "Beypore, Kozhikode",
+      "landmark": "Near Beypore Port",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS008",
+      "stop_name": "Feroke Bus Stop",
+      "latitude": 11.2278,
+      "longitude": 75.8014,
+      "address": "Feroke, Kozhikode",
+      "landmark": "Near Feroke Railway Station",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS009",
+      "stop_name": "Ramanattukara Bus Stop",
+      "latitude": 11.1786564,
+      "longitude": 75.8651117,
+      "address": "Ramanattukara, Kozhikode",
+      "landmark": "Near Ramanattukara Town Center",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS010",
+      "stop_name": "Vellimadukunnu Bus Stop",
+      "latitude": 11.2727,
+      "longitude": 75.8319,
+      "address": "Vellimadukunnu, Kozhikode",
+      "landmark": "Near Civil Station",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS011",
+      "stop_name": "Kadavu Resort Bus Stop",
+      "latitude": 11.2588,
+      "longitude": 75.7804,
+      "address": "NH 17 Calicut Bypass Road, Azhinjilam, Kozhikode",
+      "landmark": "Near Kadavu Resort",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS012",
+      "stop_name": "Mananchira Square Bus Stop",
+      "latitude": 11.2515,
+      "longitude": 75.7804,
+      "address": "Mananchira, Kozhikode",
+      "landmark": "Near Mananchira Square",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS013",
+      "stop_name": "Vadakara Bus Stand",
+      "latitude": 11.5974003,
+      "longitude": 75.5876034,
+      "address": "Vadakara, Kozhikode",
+      "landmark": "Near Vadakara Railway Station",
+      "district": "Kozhikode"
+    }
+  ],
+  "bus_routes": [
+    {
+      "route_id": "R001",
+      "route_number": "1A",
+      "route_name": "Central - Market Circular",
+      "stops": [
+        "BS001",
+        "BS006",
+        "BS002",
+        "BS001"
+      ],
+      "operator": "KSRTC",
+      "route_type": "ordinary",
+      "frequency_minutes": 30,
+      "first_bus_time": "06:00",
+      "last_bus_time": "22:00",
+      "travel_time_between_stops": 5
+    },
+    {
+      "route_id": "R002",
+      "route_number": "2B",
+      "route_name": "Central - Vadakara Express",
+      "stops": [
+        "BS001",
+        "BS013"
+      ],
+      "operator": "KSRTC",
+      "route_type": "express",
+      "frequency_minutes": 60,
+      "first_bus_time": "06:30",
+      "last_bus_time": "21:30",
+      "travel_time_between_stops": 45
+    },
+    {
+      "route_id": "R003",
+      "route_number": "3C",
+      "route_name": "Mavoor - Beypore Local",
+      "stops": [
+        "BS002",
+        "BS007"
+      ],
+      "operator": "Private",
+      "route_type": "ordinary",
+      "frequency_minutes": 15,
+      "first_bus_time": "06:15",
+      "last_bus_time": "22:15",
+      "travel_time_between_stops": 10
+    },
+    {
+      "route_id": "R004",
+      "route_number": "4D",
+      "route_name": "Medical College - Railway Station Route",
+      "stops": [
+        "BS004",
+        "BS005"
+      ],
+      "operator": "KSRTC",
+      "route_type": "ac",
+      "frequency_minutes": 20,
+      "first_bus_time": "06:10",
+      "last_bus_time": "21:40",
+      "travel_time_between_stops": 8
+    },
+    {
+      "route_id": "R005",
+      "route_number": "5E",
+      "route_name": "Palayam - Kadavu Resort Route",
+      "stops": [
+        "BS006",
+        "BS011"
+      ],
+      "operator": "Private",
+      "route_type": "ordinary",
+      "frequency_minutes": 40,
+      "first_bus_time": "06:20",
+      "last_bus_time": "21:20",
+      "travel_time_between_stops": 15
+    },
+    {
+      "route_id": "R006",
+      "route_number": "6F",
+      "route_name": "Feroke - Ramanattukara - Vellimadukunnu Circular",
+      "stops": [
+        "BS008",
+        "BS009",
+        "BS010",
+        "BS008"
+      ],
+      "operator": "KSRTC",
+      "route_type": "ordinary",
+      "frequency_minutes": 30,
+      "first_bus_time": "06:45",
+      "last_bus_time": "21:45",
+      "travel_time_between_stops": 5
+    },
+    {
+      "route_id": "R007",
+      "route_number": "7G",
+      "route_name": "Central - Mananchira Square Limited",
+      "stops": [
+        "BS001",
+        "BS012"
+      ],
+      "operator": "Private",
+      "route_type": "limited",
+      "frequency_minutes": 60,
+      "first_bus_time": "07:00",
+      "last_bus_time": "20:00",
+      "travel_time_between_stops": 20
+    },
+    {
+      "route_id": "R008",
+      "route_number": "8H",
+      "route_name": "Medical College - Vellimadukunnu Express",
+      "stops": [
+        "BS004",
+        "BS010"
+      ],
+      "operator": "KSRTC",
+      "route_type": "express",
+      "frequency_minutes": 45,
+      "first_bus_time": "06:35",
+      "last_bus_time": "21:05",
+      "travel_time_between_stops": 30
+    }
+  ]
+}

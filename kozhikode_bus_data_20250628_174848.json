@@ -1,0 +1,340 @@
+{
+  "bus_stops": [
+    {
+      "stop_id": "BS001",
+      "stop_name": "Central Bus Stand",
+      "latitude": 11.25,
+      "longitude": 75.78,
+      "address": "Mavoor Road, Kozhikode",
+      "landmark": "Near District Collectorate",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS002",
+      "stop_name": "Puthiyara Junction",
+      "latitude": 11.2637,
+      "longitude": 75.7825,
+      "address": "Puthiyara, Kozhikode",
+      "landmark": "Near Puthiyara Post Office",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS003",
+      "stop_name": "Calicut Medical College Stop",
+      "latitude": 11.2361,
+      "longitude": 75.7811,
+      "address": "Medical College Road, Kozhikode",
+      "landmark": "Calicut Medical College",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS004",
+      "stop_name": "Eranhipalam Junction",
+      "latitude": 11.2707,
+      "longitude": 75.8015,
+      "address": "Eranhipalam, Kozhikode",
+      "landmark": "Near Eranhipalam Post Office",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS005",
+      "stop_name": "Kozhikode Railway Station Stop",
+      "latitude": 11.2588,
+      "longitude": 75.7804,
+      "address": "Link Road, Kozhikode",
+      "landmark": "Kozhikode Railway Station",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS006",
+      "stop_name": "Mananchira Square Stop",
+      "latitude": 11.2485,
+      "longitude": 75.7807,
+      "address": "Mananchira, Kozhikode",
+      "landmark": "Mananchira Square",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS007",
+      "stop_name": "Moffusil Bus Stand",
+      "latitude": 11.2586,
+      "longitude": 75.7804,
+      "address": "Indira Gandhi Road, Kozhikode",
+      "landmark": "Near Moffusil Police Station",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS008",
+      "stop_name": "Sarovaram BioPark Stop",
+      "latitude": 11.2485,
+      "longitude": 75.7801,
+      "address": "Mini Bypass Road, Kozhikode",
+      "landmark": "Sarovaram BioPark",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS009",
+      "stop_name": "Beypore Port Stop",
+      "latitude": 11.1804,
+      "longitude": 75.8011,
+      "address": "Beypore Road, Kozhikode",
+      "landmark": "Beypore Port",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS010",
+      "stop_name": "Thondayad Junction",
+      "latitude": 11.2819,
+      "longitude": 75.7935,
+      "address": "Thondayad, Kozhikode",
+      "landmark": "Near Thondayad Bypass",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS011",
+      "stop_name": "Kallai Road Junction",
+      "latitude": 11.2563,
+      "longitude": 75.7857,
+      "address": "Kallai Road, Kozhikode",
+      "landmark": "Near Kallai Railway Station",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS012",
+      "stop_name": "Mankavu Junction",
+      "latitude": 11.2614,
+      "longitude": 75.7941,
+      "address": "Mankavu, Kozhikode",
+      "landmark": "Mankavu Temple",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS013",
+      "stop_name": "Vellimadukunnu Stop",
+      "latitude": 11.2901,
+      "longitude": 75.7855,
+      "address": "Vellimadukunnu, Kozhikode",
+      "landmark": "Near Government Homoeopathic Medical College",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS014",
+      "stop_name": "Ramanattukara Junction",
+      "latitude": 11.2188,
+      "longitude": 75.8367,
+      "address": "Ramanattukara, Kozhikode",
+      "landmark": "Near Ramanattukara Panchayat Office",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS015",
+      "stop_name": "Panniyankara Stop",
+      "latitude": 11.2627,
+      "longitude": 75.7769,
+      "address": "Panniyankara, Kozhikode",
+      "landmark": "Near Panniyankara Bhagavathy Temple",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS016",
+      "stop_name": "Feroke Bridge Stop",
+      "latitude": 11.2414,
+      "longitude": 75.8018,
+      "address": "Feroke, Kozhikode",
+      "landmark": "Feroke Bridge",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS017",
+      "stop_name": "Palayam Market Stop",
+      "latitude": 11.2581,
+      "longitude": 75.7806,
+      "address": "Palayam, Kozhikode",
+      "landmark": "Palayam Market",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS018",
+      "stop_name": "Vengeri Junction",
+      "latitude": 11.2814,
+      "longitude": 75.7795,
+      "address": "Vengeri, Kozhikode",
+      "landmark": "Near Vengeri Village Office",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS019",
+      "stop_name": "Karaparamba Junction",
+      "latitude": 11.2643,
+      "longitude": 75.8157,
+      "address": "Karaparamba, Kozhikode",
+      "landmark": "Near Karaparamba Post Office",
+      "district": "Kozhikode"
+    },
+    {
+      "stop_id": "BS020",
+      "stop_name": "Kadavu Resort Stop",
+      "latitude": 11.2581,
+      "longitude": 75.7806,
+      "address": "NH 66, Kozhikode",
+      "landmark": "Kadavu Resort",
+      "district": "Kozhikode"
+    }
+  ],
+  "bus_routes": [
+    {
+      "route_id": "R001",
+      "route_number": "1A",
+      "route_name": "Central - Puthiyara - Eranhipalam Circular",
+      "stops": [
+        "BS001",
+        "BS002",
+        "BS004",
+        "BS001"
+      ],
+      "operator": "KSRTC",
+      "route_type": "ordinary",
+      "frequency_minutes": 15,
+      "first_bus_time": "06:00",
+      "last_bus_time": "22:00",
+      "travel_time_between_stops": 5
+    },
+    {
+      "route_id": "R002",
+      "route_number": "2B",
+      "route_name": "Central - Medical College Express",
+      "stops": [
+        "BS001",
+        "BS003"
+      ],
+      "operator": "Private",
+      "route_type": "express",
+      "frequency_minutes": 20,
+      "first_bus_time": "06:30",
+      "last_bus_time": "21:30",
+      "travel_time_between_stops": 8
+    },
+    {
+      "route_id": "R003",
+      "route_number": "3C",
+      "route_name": "Railway Station - Beypore Port Local",
+      "stops": [
+        "BS005",
+        "BS007",
+        "BS009"
+      ],
+      "operator": "KSRTC",
+      "route_type": "ordinary",
+      "frequency_minutes": 30,
+      "first_bus_time": "06:15",
+      "last_bus_time": "21:45",
+      "travel_time_between_stops": 6
+    },
+    {
+      "route_id": "R004",
+      "route_number": "4D",
+      "route_name": "Thondayad - Feroke Bridge Express",
+      "stops": [
+        "BS010",
+        "BS016"
+      ],
+      "operator": "Private",
+      "route_type": "express",
+      "frequency_minutes": 45,
+      "first_bus_time": "06:00",
+      "last_bus_time": "20:00",
+      "travel_time_between_stops": 8
+    },
+    {
+      "route_id": "R005",
+      "route_number": "5E",
+      "route_name": "Mananchira - Karaparamba Circular",
+      "stops": [
+        "BS006",
+        "BS019",
+        "BS006"
+      ],
+      "operator": "KSRTC",
+      "route_type": "ordinary",
+      "frequency_minutes": 20,
+      "first_bus_time": "06:45",
+      "last_bus_time": "22:00",
+      "travel_time_between_stops": 4
+    },
+    {
+      "route_id": "R006",
+      "route_number": "6F",
+      "route_name": "Vellimadukunnu - Palayam Market Local",
+      "stops": [
+        "BS013",
+        "BS017"
+      ],
+      "operator": "Private",
+      "route_type": "ordinary",
+      "frequency_minutes": 35,
+      "first_bus_time": "07:00",
+      "last_bus_time": "21:00",
+      "travel_time_between_stops": 7
+    },
+    {
+      "route_id": "R007",
+      "route_number": "7G",
+      "route_name": "Panniyankara - Kadavu Resort Express",
+      "stops": [
+        "BS015",
+        "BS020"
+      ],
+      "operator": "KSRTC",
+      "route_type": "express",
+      "frequency_minutes": 60,
+      "first_bus_time": "08:00",
+      "last_bus_time": "20:00",
+      "travel_time_between_stops": 8
+    },
+    {
+      "route_id": "R008",
+      "route_number": "8H",
+      "route_name": "Sarovaram BioPark - Mankavu Local",
+      "stops": [
+        "BS008",
+        "BS012"
+      ],
+      "operator": "Private",
+      "route_type": "ordinary",
+      "frequency_minutes": 25,
+      "first_bus_time": "06:30",
+      "last_bus_time": "22:00",
+      "travel_time_between_stops": 5
+    },
+    {
+      "route_id": "R009",
+      "route_number": "9I",
+      "route_name": "Ramanattukara - Vengeri Express",
+      "stops": [
+        "BS014",
+        "BS018"
+      ],
+      "operator": "KSRTC",
+      "route_type": "express",
+      "frequency_minutes": 50,
+      "first_bus_time": "07:00",
+      "last_bus_time": "19:00",
+      "travel_time_between_stops": 8
+    },
+    {
+      "route_id": "R010",
+      "route_number": "10J",
+      "route_name": "Kallai Road - Moffusil Bus Stand Local",
+      "stops": [
+        "BS011",
+        "BS007"
+      ],
+      "operator": "Private",
+      "route_type": "ordinary",
+      "frequency_minutes": 40,
+      "first_bus_time": "06:00",
+      "last_bus_time": "22:00",
+      "travel_time_between_stops": 6
+    }
+  ]
+}

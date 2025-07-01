@@ -3,10 +3,17 @@
 // It manages the map, search inputs, markers, and the travel plans overlay.
 
 // This function is called by Google Maps when the map is ready
+
+// Declare busApp in the module scope
+let busApp;
+
+// Define initApp function
 function initApp() {
-    // Create our main app object
     busApp = new SimpleBusTimeFinder();
 }
+
+// Make initApp available globally for Google Maps
+window.initApp = initApp;
 
 // Main app class
 class SimpleBusTimeFinder {
@@ -27,6 +34,8 @@ class SimpleBusTimeFinder {
             confirmBtn: document.getElementById('confirmTripBtn'),
             backBtn: document.getElementById('backToMapBtn'),
             collapsedRow: document.getElementById('searchRowCollapsed'),
+            payTicketBtn: document.getElementById('payTicketBtn'),
+            backToMainBtn: document.getElementById('backToMainBtn'),
         };
 
         // Store state (what's currently shown, selected, etc)
@@ -44,6 +53,9 @@ class SimpleBusTimeFinder {
         this.fromAutocomplete = null;
         this.toAutocomplete = null;
         this.routeLine = null;
+        this.qrScanner = null;
+        this.qrVideoElem = document.getElementById('qr-video');
+
 
         // Start the app
         this.init();
@@ -55,8 +67,45 @@ class SimpleBusTimeFinder {
         this.setupAutocomplete();
         this.setupEvents();
         this.showCollapsedSearch();
-        this.showOverlay();
+        // this.initQrScanner();
+        this.hidePaymentScreen();
 
+    }
+    stopQrScanner() {
+        if (this.qrScanner) {
+            this.qrScanner.stop();
+        }
+    }
+
+    onQrScanned(result) {
+        console.log('QR code result:', result);
+        // You can add your logic here, e.g., process payment, close overlay, etc.
+        this.qrScanner.stop(); // Optionally stop scanning after a successful scan
+    }
+
+    initQrScanner() {
+        if (!this.qrScanner) {
+            this.qrScanner = new QrScanner(
+                this.qrVideoElem,
+                result => this.onQrScanned(result),
+                { returnDetailedScanResult: true }
+            );
+        }
+        this.qrScanner.start();
+    }
+
+    showPaymentScreen() {
+        document.getElementById('paymentscr').style.display = 'block';
+        this.initQrScanner();
+
+    }
+    
+    hidePaymentScreen() {
+        document.getElementById('paymentscr').style.display = 'none';
+        this.stopQrScanner();
+        this.ui.bottomSheet.classList.add('collapsed');
+        this.ui.bottomSheet.classList.remove('hidden');
+        this.ui.bottomSheet.classList.remove('expanded');
     }
 
     // Set up the Google Map
@@ -198,10 +247,18 @@ class SimpleBusTimeFinder {
         this.ui.confirmBtn.addEventListener('click', () => this.confirmTrip());
 
         this.ui.bottomSheet.addEventListener('click', () => {
-            this.ui.bottomSheet.classList.add('expanded');
-            this.ui.bottomSheet.classList.remove('collapsed');
-
+            if (this.ui.bottomSheet.classList.contains('collapsed')) {
+                this.ui.bottomSheet.classList.remove('collapsed');
+                this.ui.bottomSheet.classList.add('expanded');
+            } else {
+                this.ui.bottomSheet.classList.remove('expanded');
+                this.ui.bottomSheet.classList.add('collapsed');
+            }
+            this.ui.bottomSheet.classList.remove('hidden');
         });
+
+        this.ui.payTicketBtn.addEventListener('click', () => this.showPaymentScreen());
+        this.ui.backToMainBtn.addEventListener('click', () => this.hidePaymentScreen());
     }
 
     // Show collapsed search (single input)
@@ -297,44 +354,6 @@ class SimpleBusTimeFinder {
 
     // Show the travel plans overlay
     showOverlay() {
-        // Validate inputs before proceeding
-        // let fromLocation = this.ui.fromInput.value.trim();
-        // const toLocation = this.ui.toInput.value.trim();
-        // const currentAddress = this.ui.fromInput.getAttribute('data-current-address');
-        
-        // // Get structured place data
-        // let fromPlaceData = this.ui.fromInput.getAttribute('data-place-data');
-        // const toPlaceData = this.ui.toInput.getAttribute('data-place-data');
-        
-        // // Check if "to" location is empty
-        // if (!toLocation) {
-        //     this.showNotification('Please enter a destination', 'error');
-        //     return;
-        // }
-        
-        // // Check if "from" location is empty
-        // if (!fromLocation) {
-        //     // If no from location entered, check if we have current location
-        //     if (!currentAddress) {
-        //         this.showNotification('Please enter a starting location or use current location', 'error');
-        //         return;
-        //     }
-        //     // Use current location if available
-        //     fromLocation = currentAddress;
-        //     // Get current location place data if available
-        //     if (this.state.currentLocation) {
-        //         fromPlaceData = JSON.stringify({
-        //             place_id: null,
-        //             name: 'Current Location',
-        //             formatted_address: currentAddress,
-        //             coordinates: {
-        //                 lat: this.state.currentLocation.lat,
-        //                 lng: this.state.currentLocation.lng
-        //             }
-        //         });
-        //     }
-        // }
-
         let fromLocation = this.ui.fromInput.value.trim();
         const toLocation = this.ui.toInput.value.trim();
         const currentAddress = this.ui.fromInput.getAttribute('data-current-address');
@@ -448,14 +467,12 @@ class SimpleBusTimeFinder {
                     <span class="time">${route.departure_in}</span>
                     <span>min</span>
                 </div>
-                `;
+                `
                 card.addEventListener('click', () => this.selectRoute(card, route));
                 this.ui.travelList.appendChild(card);
             });
-            
             this.state.selectedRoute = null;
             this.ui.confirmBtn.style.display = 'none';
-            
         } catch (error) {
             console.error('Error fetching routes:', error);
             this.ui.travelList.innerHTML = '<div class="error">Failed to load routes. Please try again.</div>';
@@ -501,18 +518,15 @@ class SimpleBusTimeFinder {
                 lng: place.geometry.location.lng()
             }
         };
-        
         // Store as JSON string in data attribute
         const input = type === 'from' ? this.ui.fromInput : this.ui.toInput;
         input.setAttribute('data-place-data', JSON.stringify(placeData));
-        
         // Also store coordinates separately for backward compatibility
         input.setAttribute('data-lat', place.geometry.location.lat());
         input.setAttribute('data-lng', place.geometry.location.lng());
-        
         console.log(`${type.toUpperCase()} Place Data:`, placeData);
     }
-    
+
     // Store current location as place data
     storeCurrentLocationData(location) {
         // Create a clean place object with only essential data
@@ -525,14 +539,11 @@ class SimpleBusTimeFinder {
                 lng: location.lng
             }
         };
-        
         // Store as JSON string in data attribute
         this.ui.fromInput.setAttribute('data-place-data', JSON.stringify(placeData));
-        
         // Also store coordinates separately for backward compatibility
         this.ui.fromInput.setAttribute('data-lat', location.lat);
         this.ui.fromInput.setAttribute('data-lng', location.lng);
-        
         console.log('Current Location Data:', placeData);
     }
 }
@@ -544,28 +555,10 @@ window.addEventListener('error', (e) => {
     }
 });
 
-
-
 // function showPage(pageId) {
 //     document.querySelectorAll('.page-section').forEach(div => div.classList.remove('active'));
 //     document.getElementById(pageId).classList.add('active');
-//   }
+// }
 
 
-
-{/* <div class="object">
-                                    <img src="assets/icons/bus.png" alt="">
-                                    <span>20m</span>
-                                </div>
-                                <div class="object">
-                                    <img src="assets/icons/taxi.png" alt="">
-                                    <span>ro</span>
-                                </div>
-                                <div class="object">
-                                    <img src="assets/icons/walk.png" alt="">
-                                    <span>Text</span>
-                                </div>
-                                <div class="object">
-                                    <img src="assets/icons/auto.png" alt="">
-                                    <span>Text</span>
-                                </div> */}
+// load the map

@@ -11,141 +11,72 @@ from typing import List, Dict, Tuple, Optional, Set
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
 
+def load_bus_data_from_files(stops_file="backend/bus_stops.json", routes_file="backend/bus_routes.json"):
+    """Load and format bus data from external JSON files"""
+    try:
+        # Load bus stops
+        with open(stops_file, 'r', encoding='utf-8') as f:
+            stops_data = json.load(f)
+        
+        # Handle different JSON structures for stops
+        if isinstance(stops_data, list):
+            bus_stops = stops_data
+        elif 'bus_stops' in stops_data:
+            bus_stops = stops_data['bus_stops']
+        elif 'stops' in stops_data:
+            bus_stops = stops_data['stops']
+        else:
+            bus_stops = list(stops_data.values())
+        
+        # Load bus routes
+        with open(routes_file, 'r', encoding='utf-8') as f:
+            routes_data = json.load(f)
+        
+        # Handle different JSON structures for routes
+        if isinstance(routes_data, list):
+            bus_routes = routes_data
+        elif 'bus_routes' in routes_data:
+            bus_routes = routes_data['bus_routes']
+        elif 'routes' in routes_data:
+            bus_routes = routes_data['routes']
+        else:
+            bus_routes = list(routes_data.values())
+        
+        # Format routes with defaults for missing fields
+        formatted_routes = []
+        for route in bus_routes:
+            formatted_route = {
+                "route_id": route.get("route_id", f"R{len(formatted_routes)+1:03d}"),
+                "route_number": route.get("route_number", route.get("route_id", "Unknown")),
+                "route_name": route.get("route_name", f"Route {route.get('route_number', 'Unknown')}"),
+                "stops": route.get("stops", []),
+                "operator": route.get("operator", "Unknown"),
+                "route_type": route.get("route_type", "ordinary"),
+                "frequency_minutes": route.get("frequency_minutes", 30),
+                "first_bus_time": route.get("first_bus_time", "06:00"),
+                "last_bus_time": route.get("last_bus_time", "22:00"),
+                "travel_time_between_stops": route.get("travel_time_between_stops", 5)
+            }
+            formatted_routes.append(formatted_route)
+        
+        return {
+            "bus_stops": bus_stops,
+            "bus_routes": formatted_routes
+        }
+        
+    except FileNotFoundError as e:
+        print(f"❌ File not found: {e}")
+        return None
+    except json.JSONDecodeError as e:
+        print(f"❌ JSON parsing error: {e}")
+        return None
+
+# Load data from files
+BUS_DATA = load_bus_data_from_files()
+print(BUS_DATA)
+
 # Sample data with enhanced scheduling information
-SAMPLE_DATA = {
-    "bus_stops": [
-        {
-            "stop_id": "BS001",
-            "stop_name": "Central Station",
-            "latitude": 11.2588,
-            "longitude": 75.7804,
-            "address": "Central Station Rd, Kozhikode"
-        },
-        {
-            "stop_id": "BS002", 
-            "stop_name": "Medical College",
-            "latitude": 11.2496,
-            "longitude": 75.7666,
-            "address": "Medical College Rd, Kozhikode"
-        },
-        {
-            "stop_id": "BS003",
-            "stop_name": "Palayam Market",
-            "latitude": 11.2588,
-            "longitude": 75.7714,
-            "address": "Palayam, Kozhikode"
-        },
-        {
-            "stop_id": "BS004",
-            "stop_name": "Beach Road",
-            "latitude": 11.2750,
-            "longitude": 75.7747,
-            "address": "Beach Rd, Kozhikode"
-        },
-        {
-            "stop_id": "BS005",
-            "stop_name": "University",
-            "latitude": 11.1271,
-            "longitude": 75.8449,
-            "address": "Calicut University, Malappuram"
-        },
-        {
-            "stop_id": "BS006",
-            "stop_name": "Airport Junction",
-            "latitude": 11.1410,
-            "longitude": 75.9550,
-            "address": "Airport Rd, Kozhikode"
-        },
-        {
-            "stop_id": "BS007",
-            "stop_name": "Private Bus Stand",
-            "latitude": 11.2480,
-            "longitude": 75.7763,
-            "address": "Mavoor Rd, Kozhikode"
-        },
-        {
-            "stop_id": "BS008",
-            "stop_name": "KSRTC Bus Stand",
-            "latitude": 11.2447,
-            "longitude": 75.7730,
-            "address": "Mavoor Rd, Kozhikode"
-        }
-    ],
-    "bus_routes": [
-        {
-            "route_id": "R001",
-            "route_number": "1A",
-            "route_name": "Central Station - Airport",
-            "stops": ["BS001", "BS003", "BS002", "BS005", "BS006"],
-            "operator": "KSRTC",
-            "route_type": "ordinary",
-            "frequency_minutes": 30,
-            "first_bus_time": "06:00",  # First bus at 6:00 AM
-            "last_bus_time": "22:00",   # Last bus at 10:00 PM
-            "travel_time_between_stops": 5  # Minutes between consecutive stops
-        },
-        {
-            "route_id": "R002", 
-            "route_number": "1B",
-            "route_name": "Airport - Central Station",
-            "stops": ["BS006", "BS005", "BS002", "BS003", "BS001"],
-            "operator": "KSRTC",
-            "route_type": "ordinary",
-            "frequency_minutes": 30,
-            "first_bus_time": "06:30",
-            "last_bus_time": "22:30",
-            "travel_time_between_stops": 5
-        },
-        {
-            "route_id": "R003",
-            "route_number": "2",
-            "route_name": "Beach Road Circular",
-            "stops": ["BS001", "BS004", "BS003", "BS007", "BS008", "BS001"],
-            "operator": "Private",
-            "route_type": "ordinary",
-            "frequency_minutes": 20,
-            "first_bus_time": "06:15",
-            "last_bus_time": "21:45",
-            "travel_time_between_stops": 4
-        },
-        {
-            "route_id": "R004",
-            "route_number": "5E",
-            "route_name": "Express - Central to University",
-            "stops": ["BS001", "BS002", "BS005"],
-            "operator": "KSRTC",
-            "route_type": "express",
-            "frequency_minutes": 60,
-            "first_bus_time": "07:00",
-            "last_bus_time": "20:00",
-            "travel_time_between_stops": 8
-        },
-        {
-            "route_id": "R005",
-            "route_number": "5E-R",
-            "route_name": "Express - University to Central",
-            "stops": ["BS005", "BS002", "BS001"],
-            "operator": "KSRTC",
-            "route_type": "express",
-            "frequency_minutes": 60,
-            "first_bus_time": "07:30",
-            "last_bus_time": "20:30",
-            "travel_time_between_stops": 8
-        },
-        {
-            "route_id": "R006",
-            "route_number": "3",
-            "route_name": "Medical College - Beach Road",
-            "stops": ["BS002", "BS003", "BS004"],
-            "operator": "Private",
-            "route_type": "ordinary",
-            "frequency_minutes": 45,
-            "first_bus_time": "06:45",
-            "last_bus_time": "21:30",
-            "travel_time_between_stops": 6
-        }
-    ]
-}
+
 
 @dataclass
 class BusSchedule:
@@ -217,17 +148,17 @@ class AdvancedBusRouteFinder:
         self.stop_routes = {}
         self.route_graph = {}
         self.current_time = datetime.now()
-        self.load_sample_data()
+        self.load_BUS_DATA()
         self.build_route_graph()
     
-    def load_sample_data(self):
+    def load_BUS_DATA(self):
         """Load the sample data into our structures"""
         print("🔄 Loading bus network data...")
         
-        for stop_data in SAMPLE_DATA["bus_stops"]:
+        for stop_data in BUS_DATA["bus_stops"]:
             self.stops[stop_data["stop_id"]] = stop_data
         
-        for route_data in SAMPLE_DATA["bus_routes"]:
+        for route_data in BUS_DATA["bus_routes"]:
             self.routes[route_data["route_id"]] = route_data
             
             for stop_id in route_data["stops"]:
@@ -237,10 +168,10 @@ class AdvancedBusRouteFinder:
         
         print(f"✅ Loaded {len(self.stops)} stops, {len(self.routes)} routes")
     
-    def get_next_bus_times(self, route_id: str, from_stop_id: str, current_time: datetime = None) -> BusSchedule:
+    def get_next_bus_times(self, route_id: str, from_stop_id: str) -> BusSchedule:
         """Calculate next bus times for a specific route and stop"""
-        if current_time is None:
-            current_time = self.current_time
+       
+        current_time = self.current_time
         
         route = self.routes[route_id]
         
@@ -463,7 +394,7 @@ class AdvancedBusRouteFinder:
     
     def find_routes_with_realtime(self, origin_lat: float, origin_lon: float, 
                                  dest_lat: float, dest_lon: float, 
-                                 max_transfers: int = 2) -> List[Dict]:
+                                 max_transfers: int = 2,max_walkingsdis: int = 1000) -> List[Dict]:
         """Find routes and return in the requested format"""
         print("🔍 Finding routes with real-time information...")
         
@@ -474,8 +405,8 @@ class AdvancedBusRouteFinder:
         self.build_route_graph()
         
         # Find nearest stops
-        origin_stops = self.find_nearest_stops(origin_lat, origin_lon, 1000)
-        dest_stops = self.find_nearest_stops(dest_lat, dest_lon, 1000)
+        origin_stops = self.find_nearest_stops(origin_lat, origin_lon, max_walkingsdis)
+        dest_stops = self.find_nearest_stops(dest_lat, dest_lon, max_walkingsdis)
         
         if not origin_stops or not dest_stops:
             return []

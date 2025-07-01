@@ -150,8 +150,13 @@ gmp-place-autocomplete {
 /* General styling for sections within the panel. */
 .panel-section {
     margin-top: 25px;
-}
+    /* min-height: 50vh; */
 
+}
+.bigareaminh{
+    min-height: 50vh;
+    
+}
 .panel-section h2 {
     font-size: 18px;
     font-weight: 600;
@@ -555,7 +560,7 @@ gmp-place-autocomplete {
 }
 
 /* --- Travel Plans Overlay --- */
-.travel-plans-overlay {
+.overlay_screen{
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: var(--bg-color);
@@ -681,7 +686,7 @@ gmp-place-autocomplete {
 
 /* --- Adjust Bottom Sheet for New Flow --- */
 #bottom-sheet.collapsed {
-    transform: translateY(195px);
+    transform: translateY(260px);
 }
 
 #bottom-sheet.expanded {
@@ -752,7 +757,7 @@ gmp-place-autocomplete {
 .floating-btn { display: none !important; }
 
 /* Ensure overlay is above all */
-.travel-plans-overlay {
+.overlay_screen{
   z-index: 2000;
 }
 
@@ -1047,4 +1052,213 @@ route-card .details .arrival .icon {}
     font-size: 48px;
     margin-bottom: 15px;
 }
+   
+
+#paymentscr{
+    background: #022633;
+    background: linear-gradient(127deg, rgba(2, 38, 51, 1) 0%, rgba(71, 52, 4, 1) 0%, rgba(24, 29, 34, 1) 47%, rgba(3, 25, 64, 1) 100%);
+
+}
+
+#paymentscr .upper {
+    display: flex;
+    flex-direction: column;
+    /* padding: 40px 0px; */
+    /* justify-content: center; */
+    align-items: center;
+    height: 100%;
+    gap: 100px;
     
+
+}
+#paymentscr .upper .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    z-index: 2;
+    mask-image: radial-gradient(circle at center, transparent 100px, black 300px);
+    /* -webkit-mask-image: radial-gradient(circle at center, transparent 100px, black 130px); */
+}
+/* 
+#paymentscr .upper .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    pointer-events: none; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+  }
+  
+  #paymentscr .upper .overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    -webkit-mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    
+    padding: 200px 100px; 
+    pointer-events: none;
+  }
+   */
+.scan-box {
+    width: 250px;
+    height: 250px;
+    border: 2px solid #00ffcc;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px #00ffcc;
+    border-radius: 8px;
+}
+
+
+#paymentscr #bottom-sheet {
+    background: #ffffff2c;
+    color: #fff;
+    border: #fff .2px solid;
+}
+
+#paymentscr .favourite-details small {
+
+    color: #fff8f8aa!important;
+ 
+}
+
+#paymentscr .balance {
+    height: 40px;
+    width: 120px;
+    border: #fff .2px solid;
+    border-radius: 2vh;
+    position: absolute;
+    top: 10px;
+    background: #ffffff2c;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 2px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    
+}
+
+#paymentscr .balance .balance-text{
+    /* position: absolute; */
+    top: 2px;
+    /* left: 10px; */
+    /* left: 50%; */
+    /* right: 50%; */
+    /* transform: translate(-50%, -50%); */
+
+    font-size: 8px;
+    color: #fff;
+    font-weight: 200;
+}
+#paymentscr .balance .balance-amount{
+    /* position: absolute; */
+    /* top: 12px; */
+    /* left: 10px; */
+    /* left: 50%; */
+    /* right: 50%; */
+    /* transform: translate(-50%, -50%); */
+
+    font-size: 20px;
+    color: #fff;
+    font-weight: 200;
+}
+
+#paymentscr .RechargeWallet {
+    width: 150px;
+    height: 43px;
+    border-radius: 20px;
+    border: #fff .2px solid;
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 4px 16px 0 rgba(79,140,255,0.15);
+    cursor: pointer;
+    background: #ffffff2c;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    outline: none;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+}
+
+#paymentscr .RechargeWallet:hover {
+    background: linear-gradient(90deg, #38e8ff 0%, #4f8cff 100%);
+    box-shadow: 0 6px 24px 0 rgba(56,232,255,0.18);
+    transform: translateX(-50%) scale(1.04);
+}
+
+#paymentscr .RechargeWallet:active {
+    background: linear-gradient(90deg, #3578e5 0%, #1fc8db 100%);
+    box-shadow: 0 2px 8px 0 rgba(56,232,255,0.10);
+    transform: translateX(-50%) scale(0.98);
+}
+
+#paymentscr .RechargeWallet span {
+    font-family: 'Righteous', 'Roboto', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+#paymentscr .scantopay{
+    position: absolute;
+    bottom: 120px;
+    font-size: 16px;
+    color: #ffffff4b;
+    font-weight: 200;
+    filter: blur(0.4px);
+}
+
+#paymentscr .back-btn, #backToMainBtn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 8px;
+    z-index: 10;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: background 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+#paymentscr .back-btn:hover, #backToMainBtn:hover {
+    background: rgba(255,255,255,0.12);
+}

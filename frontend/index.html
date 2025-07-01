@@ -59,7 +59,7 @@
                 <div id="money-management" class="panel-section">
                     <!-- <h2>Money Management</h2> -->
                     <div class="card-container">
-                        <div class="card">
+                        <div class="card" id="payTicketBtn">
                             <span>Pay Ticket</span>
                             <img src="https://cdn-icons-png.flaticon.com/512/7630/7630510.png" alt="Pay Ticket">
                         </div>
@@ -69,9 +69,27 @@
                         </div>
                     </div>
                 </div>
-                <div id="favourites" class="panel-section">
+                <div id="favourites" class="panel-section" style="min-height: 55vh;">
                     <h2>Favourite Routes</h2>
                     <div class="favourite-list">
+                        <div class="favourite-item">
+                            <div class="favourite-icon"><i class="fas fa-bus"></i></div>
+                            <div class="favourite-details">
+                                <strong>Bus Nº 31</strong>
+                                <small>From: 72-74 Oxford St.</small>
+                                <small>To: 20 Grosvenor Sq.</small>
+                            </div>
+                            <div class="favourite-price">£10.00</div>
+                        </div>
+                        <div class="favourite-item">
+                            <div class="favourite-icon"><i class="fas fa-bus"></i></div>
+                            <div class="favourite-details">
+                                <strong>Bus Nº 31</strong>
+                                <small>From: 72-74 Oxford St.</small>
+                                <small>To: 20 Grosvenor Sq.</small>
+                            </div>
+                            <div class="favourite-price">£10.00</div>
+                        </div>
                         <div class="favourite-item">
                             <div class="favourite-icon"><i class="fas fa-bus"></i></div>
                             <div class="favourite-details">
@@ -97,92 +115,68 @@
     </div>
 
     <!-- Travel Plans Overlay (Full Screen) -->
-    <div id="travelPlansOverlay" class="travel-plans-overlay" style="display: none;">
+     <div id="paymentscr" class="overlay_screen"> 
+         <div class="upper" >
+            <button id="backToMainBtn" class="back-btn" style="position: absolute; top: 18px; left: 18px; z-index: 10;"><i class="fas fa-arrow-left"></i></button>
+            <video id="qr-video"></video>
+            <div class="overlay">
+
+        
+            
+                <div class="balance">
+                    <span class="balance-text">Balance</span>
+                    <span class="balance-amount">₹250</span>
+                </div>
+
+                <span class="scantopay">scan the qr code to pay</span>
+                
+                <button class="RechargeWallet">
+                    <span>Recharge Now</span>
+                </button>
+                <div class="scan-box"></div>
+
+
+
+        
+
+
+        <!-- <<div id="bottom-sheet">
+            <div class="handle"></div>
+            <div id="panel-content">
+                <div id="payments" class="panel-section" style="min-height: 55vh;"">
+                    <h2>Recent payments</h2>
+                    <div class="favourite-list">
+                        <div class="favourite-item">
+                            <div class="favourite-icon"><i class="fas fa-bus"></i></div>
+                            <div class="favourite-details">
+                                <strong>Bus Nº 31</strong>
+                                <small>From: 72-74 Oxford St.</small>
+                                <small>To: 20 Grosvenor Sq.</small>
+                            </div>
+                            <div class="favourite-price">£10.00</div>
+                        </div>
+                        <div class="favourite-item">
+                            <div class="favourite-icon"><i class="fas fa-subway"></i></div>
+                            <div class="favourite-details">
+                                <strong>Central Line</strong>
+                                <small>From: Great Portland St.</small>
+                                <small>To: Baker Street</small>
+                            </div>
+                            <div class="favourite-price">£5.00</div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+         </div> 
+    </div>
+
+    <div id="travelPlansOverlay" class="travel-plans-overlay overlay_screen" style="display: none;">
         <div class="travel-header">
             <button id="backToMapBtn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
             <h2>Travel Plans</h2>
         </div>
         <div class="travel-list" id="travelList">
             <div class="travel-card">
-                <div class="card-row">
-                    <span class="bus-icon"><i class="fas fa-bus"></i></span>
-                    <span class="route-name">$bus_number</span>
-                    <span class="fare">.fare</span>
-                </div>
-                <div class="card-row times">
-                    <span>Dep: departure</span>
-                    <span>Arr: arrival</span>
-                    <span>duration</span>
-                </div>
-                <div class="details">
-                    <span>line 1</span>
-                    <span>line 2 </span>
-                </div>
-             </div>
-             <div class="route-card">
-                <div class="left">
-                    <div class="up">
-                        <div class="busname">
-                            <span class="icon">
-                                <img src="assets/Frame 26.png" alt="">
-                            </span>
-                            <span class="text">Bus Name</span>
-                        </div>
-                        <div class="fare">
-                            <span class="rupeesign">
-                                <img src="assets/Frame 16.png" alt="">
-                            </span>
-                            <span class="faretext">30</span>
-                        </div>
-                    </div>
-                    <div class="down">
-                        <div class="details">
-
-                            <div class="arrival">
-                                <span class="icon">
-                                    <img src="assets/Arrow.png" alt="">
-                                </span>
-                                <span class="arrivatext">
-                                    Arrival : 4:30 Pm
-                                </span>
-                            </div>
-
-                            <div class="duration">
-                                <span class="icon">
-                                    <img src="assets/clock.png" alt="clock">
-                                </span>
-                                <span class="durationtext">Duration : 1h</span>
-                            </div>
-                        </div>
-                        <div class="busroute">
-                            <div class="center">
-                                <div class="object">
-                                    <img src="assets/icons/bus.png" alt="">
-                                    <span>20m</span>
-                                </div>
-                                <div class="object">
-                                    <img src="assets/icons/taxi.png" alt="">
-                                    <span>1.5km</span>
-                                </div>
-                                <div class="object">
-                                    <img src="assets/icons/walk.png" alt="">
-                                    <span>Text</span>
-                                </div>
-                                <div class="object">
-                                    <img src="assets/icons/tuk-tuk.png" alt="">
-                                    <span>Text</span>
-                                </div>
-                                <!-- <div class="object"></div>
-                                <div class="object"></div> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="right">
-                    <span class="time">10</span>
-                    <span>min</span>
-                </div>
-             </div>
             <!-- Route cards will be injected here -->
         </div>
         <button id="confirmTripBtn" class="confirm-btn" style="display: none;">Confirm</button>
@@ -191,7 +185,12 @@
     <!-- Scripts: The Brains of the Operation -->
     <!-- It's best practice to load JavaScript at the end of the body so the HTML content can be parsed and rendered first. -->
     <!-- Load our custom application logic. -->
+    <script src="qr-scanner.umd.min.js"></script>
     <script src="script.js"></script>
+    <!-- <script>
+        // This makes sure initApp is global, even if script.js is a module
+        window.initApp = window.initApp || undefined;
+      </script> -->
     <!-- Load the Google Maps API.
          - key: Your personal API key.
          - libraries: Tells Google which specific services we plan to use. 'places' for search, 'core' for the new components, 'geocoding' for location-to-address conversion.
