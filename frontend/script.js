@@ -36,6 +36,8 @@ class SimpleBusTimeFinder {
             collapsedRow: document.getElementById('searchRowCollapsed'),
             payTicketBtn: document.getElementById('payTicketBtn'),
             backToMainBtn: document.getElementById('backToMainBtn'),
+            PaymentMenuScrBtn: document.getElementById('PaymentMenuScrBtn'),
+            PaymentMenuScrOverlay: document.getElementById('PaymentMenuScr'),
         };
 
         // Store state (what's currently shown, selected, etc)
@@ -68,7 +70,7 @@ class SimpleBusTimeFinder {
         this.setupEvents();
         this.showCollapsedSearch();
         // this.initQrScanner();
-        this.hidePaymentScreen();
+        this.hidepaynowscannereen();
 
     }
     stopQrScanner() {
@@ -94,14 +96,14 @@ class SimpleBusTimeFinder {
         this.qrScanner.start();
     }
 
-    showPaymentScreen() {
-        document.getElementById('paymentscr').style.display = 'block';
+    showpaynowscannereen() {
+        document.getElementById('paynowscanner').style.display = 'block';
         this.initQrScanner();
 
     }
     
-    hidePaymentScreen() {
-        document.getElementById('paymentscr').style.display = 'none';
+    hidepaynowscannereen() {
+        document.getElementById('paynowscanner').style.display = 'none';
         this.stopQrScanner();
         this.ui.bottomSheet.classList.add('collapsed');
         this.ui.bottomSheet.classList.remove('hidden');
@@ -257,8 +259,15 @@ class SimpleBusTimeFinder {
             this.ui.bottomSheet.classList.remove('hidden');
         });
 
-        this.ui.payTicketBtn.addEventListener('click', () => this.showPaymentScreen());
-        this.ui.backToMainBtn.addEventListener('click', () => this.hidePaymentScreen());
+        this.ui.payTicketBtn.addEventListener('click', () => this.showpaynowscannereen());
+        this.ui.backToMainBtn.addEventListener('click', () => this.hidepaynowscannereen());
+        // Show recharge wallet overlay
+        this.ui.PaymentMenuScrBtn.addEventListener('click', () => this.showPaymentMenuScr());
+        // Close recharge wallet overlay
+        const closeRechargeBtn = document.getElementById('closePaymentMenuScrBtn');
+        if (closeRechargeBtn) {
+            closeRechargeBtn.addEventListener('click', () => this.hidePaymentMenuScr());
+        }
     }
 
     // Show collapsed search (single input)
@@ -383,7 +392,7 @@ class SimpleBusTimeFinder {
             this.ui.travelList.innerHTML = '<div class="loading">Finding routes...</div>';
             
             // Fetch routes from backend
-            const response = await fetch('http://localhost:8000/find_buses', {
+            const response = await fetch('http://localhost:8000/test', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -482,7 +491,7 @@ class SimpleBusTimeFinder {
 
     // When a route card is clicked, highlight it and show confirm button
     selectRoute(card, route) {
-        document.querySelectorAll('.travel-card').forEach(c => c.classList.remove('selected'));
+        document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
         card.classList.add('selected');
         this.state.selectedRoute = route;
         this.ui.confirmBtn.style.display = 'block';
@@ -493,6 +502,7 @@ class SimpleBusTimeFinder {
         if (!this.state.selectedRoute) return;
         this.showNotification('Trip confirmed!', 'success');
         setTimeout(() => this.hideOverlay(), 1200);
+        this.showJourneyOverlay();
     }
 
     // Show a notification at the top of the screen
@@ -546,6 +556,13 @@ class SimpleBusTimeFinder {
         this.ui.fromInput.setAttribute('data-lng', location.lng);
         console.log('Current Location Data:', placeData);
     }
+
+    showPaymentMenuScr() {
+        this.ui.PaymentMenuScrOverlay.style.display = 'flex';
+    }
+    hidePaymentMenuScr() {
+        this.ui.PaymentMenuScrOverlay.style.display = 'none';
+    }
 }
 
 // If Google Maps fails to load, show an error in the console
@@ -560,5 +577,27 @@ window.addEventListener('error', (e) => {
 //     document.getElementById(pageId).classList.add('active');
 // }
 
+// Show the journey overlay and initialize the map
+function showJourneyOverlay() {
+    // Show the overlay
+    document.getElementById('confirmTrip').style.display = 'flex';
+
+    // Initialize the map only if not already initialized
+    const mapDiv = document.getElementById('journeyMap');
+    if (!mapDiv) return;
+    if (mapDiv.dataset.mapInitialized) return;
+
+    // Example center (Calicut Railway Station)
+    const center = { lat: 11.2541, lng: 75.7810 };
+    const journeyMap = new google.maps.Map(mapDiv, {
+        center: center,
+        zoom: 15,
+        disableDefaultUI: true,
+    });
+    // Example marker
+    new google.maps.Marker({ position: center, map: journeyMap, title: "Start" });
+
+    mapDiv.dataset.mapInitialized = 'true';
+}
 
 // load the map

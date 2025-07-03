@@ -1,63 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- Basic page setup: character encoding, mobile viewport settings, and the title that appears in the browser tab. -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Bus Time Finder</title>
+    <head>
+        <!-- Basic page setup: character encoding, mobile viewport settings, and the title that appears in the browser tab. -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>Bus Time Finder</title>
 
-    <!-- External Stylesheets & Fonts -->
-    <!-- Our custom styles for the entire app. -->
-    <link rel="stylesheet" href="style.css">
-    <!-- The "Inter" font family from Google Fonts for a clean look. -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons (like the search and location icons). -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
-    <!-- Righteous font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- The main layout is layered. The map is the bottom layer, and the UI sits on top. -->
+        <!-- External Stylesheets & Fonts -->
+        <!-- Our custom styles for the entire app. -->
+        <link rel="stylesheet" href="style.css">
+        <!-- The "Inter" font family from Google Fonts for a clean look. -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+        <!-- Font Awesome for icons (like the search and location icons). -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+        <!-- Righteous font from Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Layer 1: The Map Background -->
+        <div id="map"></div>
 
-    <!-- Layer 1: The Map Background -->
-    <!-- This empty div is the target for our Google Map. JavaScript will place the interactive map inside here. -->
-    <div id="map"></div>
-
-    <!-- Layer 2: The Main UI Container -->
-    <!-- This container holds all the interactive elements that float on top of the map. -->
-    <div class="main-container">
-        
-        <!-- Expandable Search Area -->
-        <div class="search-area" id="searchArea">
-            <form id="searchForm" autocomplete="off">
-                <div class="search-row" id="searchRowCollapsed">
-                    <input type="text" id="destination-collapsed" class="search-input" placeholder="Where do you want to go?" readonly>
-                </div>
-                <div class="search-expanded" id="searchExpanded" style="display: none;">
-                    <div class="input-group">
-                        <label for="origin">From</label>
-                        <input type="text" id="origin" class="search-input" placeholder="Your current location" autocomplete="off">
-                        <button type="button" class="location-btn" id="originLocationBtn" title="Use Current Location">
-                            <i class="fas fa-crosshairs"></i>
-                        </button>
+        <!-- Layer 2: The Main UI Container -->
+        <div class="main-container">
+            
+            <!-- Expandable Search Area -->
+            <div class="search-area" id="searchArea">
+                <form id="searchForm" autocomplete="off">
+                    <div class="search-row" id="searchRowCollapsed">
+                        <input type="text" id="destination-collapsed" class="search-input" placeholder="Where do you want to go?" readonly>
                     </div>
-                    <div class="input-group">
-                        <label for="destination">To</label>
-                        <input type="text" id="destination" class="search-input" placeholder="Enter destination..." autocomplete="off">
+                    <div class="search-expanded" id="searchExpanded" style="display: none;">
+                        <div class="input-group">
+                            <label for="origin">From</label>
+                            <input type="text" id="origin" class="search-input" placeholder="Your current location" autocomplete="off">
+                            <button type="button" class="location-btn" id="originLocationBtn" title="Use Current Location">
+                                <i class="fas fa-crosshairs"></i>
+                            </button>
+                        </div>
+                        <div class="input-group">
+                            <label for="destination">To</label>
+                            <input type="text" id="destination" class="search-input" placeholder="Enter destination..." autocomplete="off">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Find Bus Button at the bottom -->
+            <button id="findBusBtn" class="bottom-btn" type="button" style="display: none;">Find Bus</button>
+
+            <!-- Bottom Sheet (Collapsed) -->
+            <div id="bottom-sheet">
+                <div class="handle"></div>
+                <div id="panel-content">
+                    <div id="money-management" class="panel-section">
+                        <!-- <h2>Money Management</h2> -->
+                        <div class="card-container">
+                            <div class="card" id="payTicketBtn">
+                                <span>Pay Ticket</span>
+                                <img src="https://cdn-icons-png.flaticon.com/512/7630/7630510.png" alt="Pay Ticket">
+                            </div>
+                            <div class="card" id="PaymentMenuScrBtn">
+                                <span>Refill Wallet</span>
+                                <img src="https://img.icons8.com/cute-clipart/64/000000/wallet.png" alt="Recharge Wallet">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="favourites" class="panel-section" style="min-height: 55vh;">
+                        <h2>Favourite Routes</h2>
+                        <div class="favourite-list">
+                            <div class="favourite-item">
+                                <div class="favourite-icon"><i class="fas fa-bus"></i></div>
+                                <div class="favourite-details">
+                                    <strong>Bus Nº 31</strong>
+                                    <small>From: 72-74 Oxford St.</small>
+                                    <small>To: 20 Grosvenor Sq.</small>
+                                </div>
+                                <div class="favourite-price">£10.00</div>
+                            </div>
+                            <div class="favourite-item">
+                                <div class="favourite-icon"><i class="fas fa-bus"></i></div>
+                                <div class="favourite-details">
+                                    <strong>Bus Nº 31</strong>
+                                    <small>From: 72-74 Oxford St.</small>
+                                    <small>To: 20 Grosvenor Sq.</small>
+                                </div>
+                                <div class="favourite-price">£10.00</div>
+                            </div>
+                            <div class="favourite-item">
+                                <div class="favourite-icon"><i class="fas fa-bus"></i></div>
+                                <div class="favourite-details">
+                                    <strong>Bus Nº 31</strong>
+                                    <small>From: 72-74 Oxford St.</small>
+                                    <small>To: 20 Grosvenor Sq.</small>
+                                </div>
+                                <div class="favourite-price">£10.00</div>
+                            </div>
+                            <div class="favourite-item">
+                                <div class="favourite-icon"><i class="fas fa-subway"></i></div>
+                                <div class="favourite-details">
+                                    <strong>Central Line</strong>
+                                    <small>From: Great Portland St.</small>
+                                    <small>To: Baker Street</small>
+                                </div>
+                                <div class="favourite-price">£5.00</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
 
-        <!-- Find Bus Button at the bottom -->
-        <button id="findBusBtn" class="bottom-btn" type="button" style="display: none;">Find Bus</button>
+        <!-- pay tickets overlay (Full Screen) -->
+        <div id="paynowscanner" class="overlay_screen" style="display: none;"> 
+            <div class="upper" >
+                <button id="backToMainBtn" class="back-btn" style="position: absolute; top: 18px; left: 18px; z-index: 10;"><i class="fas fa-arrow-left"></i></button>
+                <video id="qr-video"></video>
+                <div class="overlay">
 
-        <!-- Bottom Sheet (Collapsed) -->
-        <div id="bottom-sheet">
-            <div class="handle"></div>
-            <div id="panel-content">
-                <div id="money-management" class="panel-section">
-                    <!-- <h2>Money Management</h2> -->
+            
+                
+                    <div class="balance">
+                        <span class="balance-text">Balance</span>
+                        <span class="balance-amount">₹250</span>
+                    </div>
+
+                    <span class="scantopay">scan the qr code to pay</span>
+                    <div class="PaymentMenuScr">
+                        <span>rechrge Now</span>
+                    </div>
+                    <div class="scan-box"></div>
+                </div>
+            </div> 
+        </div>
+
+        <!-- Travel Plans Overlay (Full Screen) -->
+        <div id="travelPlansOverlay" class="travel-plans-overlay overlay_screen" style="display: none;">
+            <div class="travel-header">
+                <button id="backToMapBtn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
+                <h2>Travel Plans</h2>
+            </div>
+            <div class="travel-list" id="travelList"> </div>
+            <button id="confirmTripBtn" class="confirm-btn" style="display: none;">Confirm</button>
+        </div>
+
+        <!-- Confirm Trip Overlay (Full Screen) -->
+        <div id="PaymentMenuScr" class="overlay_screen" style="display:none;">
+            <button id="closePaymentMenuScrBtn" class="back-btn" style="position: absolute; top: 18px; left: 18px; z-index: 10;"><i class="fas fa-arrow-left"></i></button>
+            <div class="wrapper">
+                    <div class="balance">
+                        <span class="balance-text">Balance</span>
+                        <span class="balance-amount">₹250</span>
+                    </div>
+
                     <div class="card-container">
                         <div class="card" id="payTicketBtn">
                             <span>Pay Ticket</span>
@@ -68,134 +162,42 @@
                             <img src="https://img.icons8.com/cute-clipart/64/000000/wallet.png" alt="Recharge Wallet">
                         </div>
                     </div>
-                </div>
-                <div id="favourites" class="panel-section" style="min-height: 55vh;">
-                    <h2>Favourite Routes</h2>
-                    <div class="favourite-list">
-                        <div class="favourite-item">
-                            <div class="favourite-icon"><i class="fas fa-bus"></i></div>
-                            <div class="favourite-details">
-                                <strong>Bus Nº 31</strong>
-                                <small>From: 72-74 Oxford St.</small>
-                                <small>To: 20 Grosvenor Sq.</small>
+
+
+                </div><!-- WRAPPER - -->
+
+
+                    <div id="bottom-sheet">
+                        <div class="handle"></div>
+                        <div id="panel-content">
+                            <div id="payments" class="panel-section" style="min-height: 55vh;"">
+                                <h2>Recent payments</h2>
+                                <div class="favourite-list">
+                                    <div class="favourite-item">
+                                        <div class="favourite-icon"><i class="fas fa-bus"></i></div>
+                                        <div class="favourite-details">
+                                            <strong>Bus Nº 31</strong>
+                                            <small>From: 72-74 Oxford St.</small>
+                                            <small>To: 20 Grosvenor Sq.</small>
+                                        </div>
+                                        <div class="favourite-price">£10.00</div>
+                                    </div>
+                                    <div class="favourite-item">
+                                        <div class="favourite-icon"><i class="fas fa-subway"></i></div>
+                                        <div class="favourite-details">
+                                            <strong>Central Line</strong>
+                                            <small>From: Great Portland St.</small>
+                                            <small>To: Baker Street</small>
+                                        </div>
+                                        <div class="favourite-price">£5.00</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="favourite-price">£10.00</div>
                         </div>
-                        <div class="favourite-item">
-                            <div class="favourite-icon"><i class="fas fa-bus"></i></div>
-                            <div class="favourite-details">
-                                <strong>Bus Nº 31</strong>
-                                <small>From: 72-74 Oxford St.</small>
-                                <small>To: 20 Grosvenor Sq.</small>
-                            </div>
-                            <div class="favourite-price">£10.00</div>
-                        </div>
-                        <div class="favourite-item">
-                            <div class="favourite-icon"><i class="fas fa-bus"></i></div>
-                            <div class="favourite-details">
-                                <strong>Bus Nº 31</strong>
-                                <small>From: 72-74 Oxford St.</small>
-                                <small>To: 20 Grosvenor Sq.</small>
-                            </div>
-                            <div class="favourite-price">£10.00</div>
-                        </div>
-                        <div class="favourite-item">
-                            <div class="favourite-icon"><i class="fas fa-subway"></i></div>
-                            <div class="favourite-details">
-                                <strong>Central Line</strong>
-                                <small>From: Great Portland St.</small>
-                                <small>To: Baker Street</small>
-                            </div>
-                            <div class="favourite-price">£5.00</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Travel Plans Overlay (Full Screen) -->
-     <div id="paymentscr" class="overlay_screen"> 
-         <div class="upper" >
-            <button id="backToMainBtn" class="back-btn" style="position: absolute; top: 18px; left: 18px; z-index: 10;"><i class="fas fa-arrow-left"></i></button>
-            <video id="qr-video"></video>
-            <div class="overlay">
-
-        
-            
-                <div class="balance">
-                    <span class="balance-text">Balance</span>
-                    <span class="balance-amount">₹250</span>
-                </div>
-
-                <span class="scantopay">scan the qr code to pay</span>
-                
-                <button class="RechargeWallet">
-                    <span>Recharge Now</span>
-                </button>
-                <div class="scan-box"></div>
-
-
-
-        
-
-
-        <!-- <<div id="bottom-sheet">
-            <div class="handle"></div>
-            <div id="panel-content">
-                <div id="payments" class="panel-section" style="min-height: 55vh;"">
-                    <h2>Recent payments</h2>
-                    <div class="favourite-list">
-                        <div class="favourite-item">
-                            <div class="favourite-icon"><i class="fas fa-bus"></i></div>
-                            <div class="favourite-details">
-                                <strong>Bus Nº 31</strong>
-                                <small>From: 72-74 Oxford St.</small>
-                                <small>To: 20 Grosvenor Sq.</small>
-                            </div>
-                            <div class="favourite-price">£10.00</div>
-                        </div>
-                        <div class="favourite-item">
-                            <div class="favourite-icon"><i class="fas fa-subway"></i></div>
-                            <div class="favourite-details">
-                                <strong>Central Line</strong>
-                                <small>From: Great Portland St.</small>
-                                <small>To: Baker Street</small>
-                            </div>
-                            <div class="favourite-price">£5.00</div>
-                        </div>
-                    </div>
-                </div> -->
-            </div>
-         </div> 
-    </div>
-
-    <div id="travelPlansOverlay" class="travel-plans-overlay overlay_screen" style="display: none;">
-        <div class="travel-header">
-            <button id="backToMapBtn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
-            <h2>Travel Plans</h2>
-        </div>
-        <div class="travel-list" id="travelList">
-            <div class="travel-card">
-            <!-- Route cards will be injected here -->
-        </div>
-        <button id="confirmTripBtn" class="confirm-btn" style="display: none;">Confirm</button>
-    </div>
-
-    <!-- Scripts: The Brains of the Operation -->
-    <!-- It's best practice to load JavaScript at the end of the body so the HTML content can be parsed and rendered first. -->
-    <!-- Load our custom application logic. -->
-    <script src="qr-scanner.umd.min.js"></script>
-    <script src="script.js"></script>
-    <!-- <script>
-        // This makes sure initApp is global, even if script.js is a module
-        window.initApp = window.initApp || undefined;
-      </script> -->
-    <!-- Load the Google Maps API.
-         - key: Your personal API key.
-         - libraries: Tells Google which specific services we plan to use. 'places' for search, 'core' for the new components, 'geocoding' for location-to-address conversion.
-         - callback=initApp: This is crucial. It tells the Google script to run our `initApp` function (from script.js) once it has fully loaded and is ready. This prevents "google is not defined" errors.
-         - async: Allows the browser to continue rendering the page while this script downloads in the background. -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQRjNlkeSd-2kMqiwcplPS2Aez29SH1m4&libraries=places,geocoding&callback=initApp" async></script>
-</body>
+                    </div>  <!-- BOTTOME SHEET - -->
+        </div><!-- RECHARGE WALLET  - -->
+        <script src="qr-scanner.umd.min.js"></script>
+        <script src="script.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQRjNlkeSd-2kMqiwcplPS2Aez29SH1m4&libraries=places,geocoding&callback=initApp" async></script>
+    </body>
 </html>

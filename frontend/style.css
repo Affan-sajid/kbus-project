@@ -320,7 +320,7 @@ gmp-place-autocomplete {
     box-shadow: 0 0 0 2px var(--accent-light);
     transform: translateY(-2px); /* Lifts the card slightly. */
 }
-.result-item .top-row, .result-item .mid-row {
+/* .result-item .top-row, .result-item .mid-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -360,18 +360,18 @@ gmp-place-autocomplete {
 .modal-footer {
     padding: 20px;
     border-top: 1px solid var(--border-color);
-}
-.confirm-btn {
+} */
+/* .confirm-btn {
     width: 100%;
     padding: 15px;
-    background: #48bb78; /* Green for confirmation. */
+    background: #48bb78; 
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-}
+} */
 
 
 /* --- Google Maps Autocomplete --- */
@@ -560,15 +560,8 @@ gmp-place-autocomplete {
 }
 
 /* --- Travel Plans Overlay --- */
-.overlay_screen{
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: var(--bg-color);
-    z-index: 1001;
-    display: flex;
-    flex-direction: column;
-    animation: fadeIn 0.3s;
-}
+/*
+/* */
 
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -607,7 +600,7 @@ gmp-place-autocomplete {
     flex-direction: column;
     gap: 18px;
 }
-
+/* 
 .travel-card {
     background: var(--panel-bg);
     border-radius: 14px;
@@ -659,7 +652,7 @@ gmp-place-autocomplete {
     font-weight: 700;
     color: #38a169;
     font-size: 16px;
-}
+} */
 
 .confirm-btn {
     position: fixed;
@@ -670,14 +663,14 @@ gmp-place-autocomplete {
     background: #38a169;
     color: #fff;
     border: none;
-    border-radius: 0 0 18px 18px;
+    border-radius: 18px 18px 0 0 ;
     font-size: 18px;
     font-weight: 700;
     padding: 22px 0 18px 0;
     box-shadow: 0 -4px 24px rgba(56,161,105,0.13);
     z-index: 1002;
     display: block;
-    transition: background 0.2s;
+    transition: background 0.4s;
 }
 
 .confirm-btn:active {
@@ -758,8 +751,14 @@ gmp-place-autocomplete {
 
 /* Ensure overlay is above all */
 .overlay_screen{
-  z-index: 2000;
-}
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--bg-color);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s;
+} 
 
 /* .search-expanded: From above To */
 .search-expanded {
@@ -770,40 +769,6 @@ gmp-place-autocomplete {
 
 .search-expanded .input-group:first-child { order: 1; }
 .search-expanded .input-group:last-child { order: 2; }
-
-
-
-
-/* .route-card .up
-.route-card .busname 
-.route-card .busname .icon 
-.route-card .busname .icon img 
-.route-card .busname .text 
-.route-card .fare 
-.route-card .fare .rupeesign 
-.route-card .fare .rupeesign  img
-.route-card .faretext 
-.route-card .down
-.route-card .details
-.route-card .details .arrival 
-route-card .details .arrival .icon {}
-.route-card .details .arrival .icon img {}
-.route-card .details .arrival .arrivatext {}
-.route-card .details .duration  {}
-.route-card .details .duration .icon {}
-.route-card .details .duration .icon img {}
-.route-card .details .duration .durationtext {}
-.route-card .busroute {}
-.route-card .busroute .center {}
-.route-card .busroute .center .object {}
-.route-card .right {}
-.route-card .right span {}
-.route-card .right .time {}
-
- */
-
-
-
 
 
 
@@ -820,6 +785,7 @@ route-card .details .arrival .icon {}
     overflow: hidden;
     border: 1.5px solid var(--border-color, #EEEFEF);
     min-height: 126px;
+    
   }
   
   .route-card .left {
@@ -831,19 +797,11 @@ route-card .details .arrival .icon {}
     gap: 8px;
     height: 100%;
   }
-  /* .route-card .left{
-    display: flex;
-    flex-direction: row;
-    background: var(--panel-bg, #fff);
-    border-radius: 16px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    margin-bottom: 16px;
-    padding: 0;
-    overflow: hidden;
-    border: 1.5px solid var(--border-color, #e2e8f0);
-    min-height: 120px;
-    
-} */
+
+  .selected {
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 8px 24px rgba(49,130,206,0.13);
+}
   
   .route-card .up {
     display: flex;
@@ -851,10 +809,7 @@ route-card .details .arrival .icon {}
     align-items: center;
     justify-content: space-between;
     padding: 0 4px;
-    /* height: 52px; */
-  
 
-    /* margin-bottom: 8px; */
   }
   
   .route-card .busname {
@@ -1054,13 +1009,13 @@ route-card .details .arrival .icon {}
 }
    
 
-#paymentscr{
+#paynowscanner{
     background: #022633;
     background: linear-gradient(127deg, rgba(2, 38, 51, 1) 0%, rgba(71, 52, 4, 1) 0%, rgba(24, 29, 34, 1) 47%, rgba(3, 25, 64, 1) 100%);
 
 }
 
-#paymentscr .upper {
+#paynowscanner .upper {
     display: flex;
     flex-direction: column;
     /* padding: 40px 0px; */
@@ -1071,7 +1026,7 @@ route-card .details .arrival .icon {}
     
 
 }
-#paymentscr .upper .overlay {
+#paynowscanner .upper .overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -1089,7 +1044,7 @@ route-card .details .arrival .icon {}
     /* -webkit-mask-image: radial-gradient(circle at center, transparent 100px, black 130px); */
 }
 /* 
-#paymentscr .upper .overlay {
+#paynowscanner .upper .overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -1106,7 +1061,7 @@ route-card .details .arrival .icon {}
     color: #fff;
   }
   
-  #paymentscr .upper .overlay::before {
+  #paynowscanner .upper .overlay::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -1138,19 +1093,19 @@ route-card .details .arrival .icon {}
 }
 
 
-#paymentscr #bottom-sheet {
+#paynowscanner #bottom-sheet {
     background: #ffffff2c;
     color: #fff;
     border: #fff .2px solid;
 }
 
-#paymentscr .favourite-details small {
+#paynowscanner .favourite-details small {
 
     color: #fff8f8aa!important;
  
 }
 
-#paymentscr .balance {
+#paynowscanner .balance {
     height: 40px;
     width: 120px;
     border: #fff .2px solid;
@@ -1169,7 +1124,7 @@ route-card .details .arrival .icon {}
     
 }
 
-#paymentscr .balance .balance-text{
+#paynowscanner .balance .balance-text{
     /* position: absolute; */
     top: 2px;
     /* left: 10px; */
@@ -1181,7 +1136,7 @@ route-card .details .arrival .icon {}
     color: #fff;
     font-weight: 200;
 }
-#paymentscr .balance .balance-amount{
+#paynowscanner .balance .balance-amount{
     /* position: absolute; */
     /* top: 12px; */
     /* left: 10px; */
@@ -1194,7 +1149,7 @@ route-card .details .arrival .icon {}
     font-weight: 200;
 }
 
-#paymentscr .RechargeWallet {
+#paynowscanner .PaymentMenuScr {
     width: 150px;
     height: 43px;
     border-radius: 20px;
@@ -1220,33 +1175,33 @@ route-card .details .arrival .icon {}
 
 }
 
-#paymentscr .RechargeWallet:hover {
+#paynowscanner .PaymentMenuScr:hover {
     background: linear-gradient(90deg, #38e8ff 0%, #4f8cff 100%);
     box-shadow: 0 6px 24px 0 rgba(56,232,255,0.18);
     transform: translateX(-50%) scale(1.04);
 }
 
-#paymentscr .RechargeWallet:active {
+#paynowscanner .PaymentMenuScr:active {
     background: linear-gradient(90deg, #3578e5 0%, #1fc8db 100%);
     box-shadow: 0 2px 8px 0 rgba(56,232,255,0.10);
     transform: translateX(-50%) scale(0.98);
 }
 
-#paymentscr .RechargeWallet span {
+#paynowscanner .PaymentMenuScr span {
     font-family: 'Righteous', 'Roboto', sans-serif;
     letter-spacing: 0.5px;
-}
+    }
 
-#paymentscr .scantopay{
+#paynowscanner .scantopay{
     position: absolute;
     bottom: 120px;
     font-size: 16px;
     color: #ffffff4b;
     font-weight: 200;
     filter: blur(0.4px);
-}
+    }
 
-#paymentscr .back-btn, #backToMainBtn {
+#paynowscanner .back-btn, #backToMainBtn {
     background: none;
     border: none;
     font-size: 22px;
@@ -1259,6 +1214,372 @@ route-card .details .arrival .icon {}
     transition: background 0.15s;
     box-shadow: 0 2px 8px rgba(0,0,0,0.10);
 }
-#paymentscr .back-btn:hover, #backToMainBtn:hover {
+#paynowscanner .back-btn:hover, #backToMainBtn:hover {
     background: rgba(255,255,255,0.12);
 }
+
+/* --- Enhanced Start Journey Overlay Styles --- */
+#confirmTrip.overlay_screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    background: #f7fafc;
+    z-index: 2002;
+    padding: 0;
+    overflow: hidden;
+    min-height: 100vh;
+}
+.confirm-trip-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 18px 8px 18px;
+    background: #fff;
+    border-bottom: 1.5px solid #e2e8f0;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 2px 12px 0 rgba(49,130,206,0.04);
+}
+.confirm-trip-header h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a202c;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+.confirm-trip-subtitle {
+    font-size: 15px;
+    color: #4a5568;
+    font-weight: 400;
+    margin: 0 18px 10px 54px;
+    line-height: 1.4;
+}
+#closeConfirmTrip.back-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #3182ce;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: background 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+#closeConfirmTrip.back-btn:hover {
+    background: rgba(49,130,206,0.08);
+}
+#confirmTrip .confirm-trip-map {
+    position: relative;
+    width: 92vw;
+    max-width: 480px;
+    height: 180px;
+    margin: 18px auto 0 auto;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(49,130,206,0.10);
+    overflow: hidden;
+    background: #e6f0fa;
+}
+#journeyMap {
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    min-height: 120px;
+}
+.map-placeholder {
+    color: #3182ce;
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.7;
+}
+.confirm-trip-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 18px 0 8px 0;
+}
+.confirm-trip-step {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #3182ce;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(49,130,206,0.07);
+    transition: background 0.2s, color 0.2s;
+}
+.confirm-trip-step.active {
+    background: linear-gradient(90deg, #3182ce 0%, #38a169 100%);
+    color: #fff;
+}
+.confirm-trip-cards {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 18px 10px 110px 10px;
+    background: #f7fafc;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.segment-card {
+    display: flex;
+    align-items: flex-start;
+    background: linear-gradient(90deg, #fff 80%, #f1f5f9 100%);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    padding: 18px 16px;
+    gap: 18px;
+    border-left: 6px solid #3182ce;
+    transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
+    position: relative;
+    min-height: 80px;
+}
+.segment-card.auto { border-color: #ffb300; background: linear-gradient(90deg, #fff 80%, #fffbe6 100%); }
+.segment-card.bus { border-color: #3182ce; background: linear-gradient(90deg, #fff 80%, #e6f0fa 100%); }
+.segment-card.walk { border-color: #38a169; background: linear-gradient(90deg, #fff 80%, #e6fae6 100%); }
+.segment-icon {
+    width: 48px;
+    height: 48px;
+    background: #f1f5f9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(49,130,206,0.07);
+    margin-top: 2px;
+}
+.segment-icon img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+.segment-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.segment-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 2px;
+}
+.segment-status {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    letter-spacing: 0.01em;
+}
+.segment-card.auto .segment-status { color: #ffb300; }
+.segment-card.bus .segment-status { color: #3182ce; }
+.segment-card.walk .segment-status { color: #38a169; }
+.segment-meta {
+    font-size: 13px;
+    color: #4a5568;
+    font-weight: 400;
+    margin-bottom: 1px;
+}
+.confirm-trip-btn {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    max-width: 480px;
+    margin: 0 auto 0 auto;
+    background: linear-gradient(90deg, #3182ce 0%, #38a169 100%);
+    color: #fff;
+    border: none;
+    border-radius: 18px 18px 0 0 ;
+    font-size: 20px;
+    font-weight: 800;
+    padding: 26px 0 22px 0;
+    box-shadow: 0 -4px 24px rgba(49,130,206,0.13);
+    z-index: 1002;
+    display: block;
+    transition: background 0.4s, transform 0.1s;
+    letter-spacing: 0.01em;
+    animation: pulseBtn 1.8s infinite alternate;
+}
+.confirm-trip-btn:active {
+    background: linear-gradient(90deg, #276749 0%, #3182ce 100%);
+    transform: scale(0.98);
+}
+
+
+
+
+
+
+
+#PaymentMenuScr{
+    background: #022633;
+    background: linear-gradient(127deg, rgba(2, 38, 51, 1) 0%, rgba(71, 52, 4, 1) 0%, rgba(24, 29, 34, 1) 47%, rgba(3, 25, 64, 1) 100%);
+
+}
+
+#PaymentMenuScr .wrapper {
+    display: flex;
+    flex-direction: column;
+    /* padding: 40px 0px; */
+    /* justify-content: center; */
+    align-items: center;
+    height: 70%;
+    width: 100%;
+    gap: 100px;
+    color: #fff;
+    z-index: 2;
+    position: relative;
+    
+
+}
+/* #PaymentMenuScr .wrapper .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    z-index: 2;
+} */
+/* 
+#paynowscanner .wrapper .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    pointer-events: none; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+  }
+  
+  #paynowscanner .wrapper .overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    -webkit-mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    
+    padding: 200px 100px; 
+    pointer-events: none;
+  }
+   */
+
+
+#PaymentMenuScr #bottom-sheet {
+    position: absolute;
+    background: #ffffff2c;
+    color: #fff;
+    border: #fff .2px solid;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+#PaymentMenuScr .favourite-details small {
+
+    color: #fff8f8aa!important;
+ 
+}
+
+#PaymentMenuScr .balance {
+    height: 80px;
+    width: 240px;
+    border: #fff .2px solid;
+    border-radius: 2vh;
+    position: absolute;
+    top: 20px;
+    background: #ffffff2c;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    
+}
+
+#PaymentMenuScr .balance .balance-text{
+    top: 2px;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 200;
+}
+#PaymentMenuScr .balance .balance-amount{
+
+
+    font-size: 40px;
+    color: #fff;
+    font-weight: 200;
+}
+
+
+#PaymentMenuScr .card-container{
+    position: absolute;
+    bottom: 70px;
+}
+
+#PaymentMenuScr .card{
+    border: #fff .2px solid;
+    background: #ffffff2c;}
+
+
+#PaymentMenuScr .back-btn, #backToMainBtn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 8px;
+    z-index: 10;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: background 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+#PaymentMenuScr .back-btn:hover, #backToMainBtn:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+
+@keyframes pulseBtn {
+    0% { box-shadow: 0 -4px 24px rgba(49,130,206,0.13); }
+    100% { box-shadow: 0 -8px 32px rgba(56,161,105,0.18); }
+}
+@media (max-width: 600px) {
+    .confirm-trip-header { padding: 16px 10px 8px 10px; }
+    .confirm-trip-map { height: 120px; }
+    .confirm-trip-cards { padding: 10px 4px 90px 4px; }
+    .segment-card { padding: 13px 8px; gap: 10px; }
+    .segment-title { font-size: 15px; }
+    .confirm-trip-btn { font-size: 17px; padding: 18px 0 12px 0; }
+    #journeyMap { min-height: 80px; }
+}
+
+

@@ -1,6 +1,7 @@
 # main.py - Flask backend for Bus Time Finder
 # This file creates a simple API for the frontend to connect to.
 
+from modulefinder import test
 from turtle import distance
 from flask import Flask, request, jsonify, send_from_directory, render_template_string
 from flask_cors import CORS
@@ -27,6 +28,72 @@ finder = AdvancedBusRouteFinder()
 #     return 'Bus Time Finder backend is running!'
 
 # Endpoint to find bus routes between two places
+tesobj= []
+
+@app.route('/test', methods=['POST', 'OPTIONS'])
+def testpass():
+    if request.method == 'OPTIONS':
+        response = jsonify({'status': 'ok'})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', 'POST')
+        return response
+    testobj = [
+        {
+            'bus_name': "Bus 1",
+            'departure_in': 5,
+            'arrival': "10:00 AM",
+            'duration': "20 min",
+            'transfers': 1,
+            'fare': "₹20",
+            'plan': [
+                {
+                    'type': 'bus',
+                    'distance': '2km',
+                    'from': 'Stop A',
+                    'to': 'Stop B',
+                    'coordinates': {'lat': 11.2541, 'lng': 75.7810}
+                },
+                {
+                    'type': 'auto',
+                    'distance': '3km',
+                    'from': 'Stop B',
+                    'to': 'Destination',
+                    'coordinates': {'lat': 11.2565, 'lng': 75.7804}
+                }
+            ]
+        },
+        {
+            'bus_name': "Bus 2",
+            'departure_in': 10,
+            'arrival': "10:20 AM",
+            'duration': "25 min",
+            'transfers': 2,
+            'fare': "₹25",
+            'plan': [
+                {
+                    'type': 'bus',
+                    'distance': '2.5km',
+                    'from': 'Stop C',
+                    'to': 'Stop D',
+                    'coordinates': {'lat': 11.2550, 'lng': 75.7820}
+                },
+                {
+                    'type': 'auto',
+                    'distance': '2km',
+                    'from': 'Stop D',
+                    'to': 'Destination',
+                    'coordinates': {'lat': 11.2570, 'lng': 75.7830}
+                }
+            ]
+        }
+    ]
+    response = jsonify({'routes': testobj})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    # print("send complete")
+    return response
+    
+
 @app.route('/find_buses', methods=['POST', 'OPTIONS'])
 def find_buses():
     time.sleep(1)
