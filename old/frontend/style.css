@@ -1,0 +1,1585 @@
+/* --- Base Styles --- */
+
+/* :root is where we define global CSS variables for our entire application.
+   This makes it easy to manage our theme (colors, fonts, etc.) from one place. */
+:root {
+    --bg-color: #f4f7f9;
+    --panel-bg: #ffffff;
+    --text-color: #1a202c;
+    --subtle-text: #4a5568;
+    --border-color: #e2e8f0;
+    --accent-color: #3182ce;
+    --accent-light: #bee3f8;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* A universal reset to remove default browser margins and paddings, ensuring consistency. */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic styles for the body. We make it fill the full height and hide any overflow
+   to prevent scrollbars from appearing, as our layout is self-contained. */
+html, body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Prevents scrolling the whole page. */
+    -webkit-tap-highlight-color: transparent; /* Removes blue tap highlight on mobile. */
+}
+
+
+/* --- Layout Containers --- */
+
+/* The map container is positioned absolutely to fill the entire screen.
+   'z-index: 1' places it on the bottom layer of our visual stack. */
+#map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* The main UI container is positioned 'relative' to act as a stacking context.
+   'z-index: 2' places it *on top* of the map.
+   'pointer-events: none' is a clever trick: it makes this container transparent to mouse clicks,
+   so you can still interact with the map underneath it. We re-enable pointer-events on child elements. */
+.main-container {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    pointer-events: none;
+}
+
+
+/* --- Floating Search Bar --- */
+
+/* The search bar is positioned absolutely at the top of the screen. */
+.search-container {
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    right: 15px;
+    background: var(--panel-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px var(--shadow-color);
+    display: flex; /* Flexbox helps us align the icon, input, and button horizontally. */
+    align-items: center;
+    padding: 8px 15px;
+    pointer-events: auto; /* We re-enable clicks for the search bar itself. */
+}
+
+/* Simple styling for the search icon inside the bar. */
+.search-icon {
+    color: var(--subtle-text);
+    margin-right: 10px;
+}
+
+/* The input field takes up all available space. */
+.search-container input,
+gmp-place-autocomplete {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: transparent;
+}
+
+/* The location button on the right. */
+.location-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--accent-color);
+    cursor: pointer;
+    padding: 5px;
+}
+
+
+/* --- Bottom Sheet --- */
+
+/* The bottom sheet is positioned absolutely at the bottom of the screen. */
+#bottom-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--panel-bg);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.15); /* A shadow at the top to give it depth. */
+    pointer-events: auto; /* Enable clicks on the panel. */
+    max-height: 80vh; /* It can't be taller than 80% of the viewport height. */
+    transition: transform 0.4s cubic-bezier(.4,1.4,.6,1); /* This animates the sliding motion. */
+
+    /* This transform is the key to the 'peek' view. It moves the panel down by its own height,
+       then pulls it back up by 250px, leaving the top visible. */
+    transform: translateY(calc(100% - 250px));
+}
+
+/* When the panel is hovered or contains the active/focused element, it slides fully into view. */
+#bottom-sheet:focus-within, #bottom-sheet:hover {
+    transform: translateY(0);
+}
+
+/* The small gray handle at the top of the panel. */
+.handle {
+    width: 40px;
+    height: 5px;
+    background: var(--border-color);
+    border-radius: 2.5px;
+    margin: 10px auto;
+    cursor: grab;
+}
+
+/* The scrollable content area inside the panel. */
+#panel-content {
+    padding: 0 20px 30px;
+    overflow-y: auto;
+    max-height: calc(80vh - 45px); /* Ensure content doesn't overflow the panel. */
+}
+
+/* General styling for sections within the panel. */
+.panel-section {
+    margin-top: 25px;
+    /* min-height: 50vh; */
+
+}
+.bigareaminh{
+    min-height: 50vh;
+    
+}
+.panel-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+
+/* --- Trip Planner Section --- */
+/* Specific styles for the inputs and button inside the trip planner. */
+#trip-planner .input-group {
+    margin-bottom: 15px;
+}
+#trip-planner label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--subtle-text);
+    margin-bottom: 5px;
+}
+#trip-planner input,
+#trip-planner gmp-place-autocomplete {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+}
+#trip-planner input:read-only {
+    background: #f7fafc; /* A slightly different background for the non-editable 'To' field. */
+}
+.go-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+/* --- Money Management & Favourites --- */
+/* Using flexbox to place the two cards side-by-side. */
+.card-container {
+    display: flex;
+    gap: 15px;
+}
+
+.card {
+    flex: 1; /* Each card takes up an equal amount of space. */
+    display: flex;
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+.card img {
+    height: 48px;
+    margin-bottom: 10px;
+}
+.card span {
+    font-weight: 500;
+    text-align: left;
+}
+
+/* Styling for the list of favorite routes. */
+.favourite-list .favourite-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.favourite-list .favourite-item:last-child {
+    border-bottom: none;
+}
+.favourite-icon {
+    font-size: 20px;
+    color: var(--accent-color);
+    background: var(--accent-light);
+    width: 40px;
+    height: 40px;
+    display: grid; /* A simple way to center the icon perfectly. */
+    place-items: center;
+    border-radius: 8px;
+}
+.favourite-details {
+    flex-grow: 1; /* Takes up the remaining space. */
+}
+.favourite-details strong {
+    font-size: 16px;
+}
+.favourite-details small {
+    display: block;
+    color: var(--subtle-text);
+}
+.favourite-price {
+    font-weight: 600;
+}
+
+
+/* --- Results Modal --- */
+
+/* The modal overlay covers the entire screen and is hidden by default. */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background. */
+    display: none; /* Initially hidden. */
+    align-items: center; /* These two properties perfectly center the modal. */
+    justify-content: center;
+    z-index: 1000; /* Ensures the modal is on top of everything else. */
+}
+/* The 'active' class is added by JavaScript to show the modal. */
+.modal-overlay.active {
+    display: flex;
+}
+.modal {
+    background: var(--bg-color);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 480px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column; /* Stacks the header, body, and footer vertically. */
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.modal-header h2 {
+    font-size: 20px;
+}
+.modal-close {
+    background: none; border: none; font-size: 24px;
+    font-weight: 300; cursor: pointer; color: var(--subtle-text);
+}
+.modal-body {
+    padding: 0 10px;
+    overflow-y: auto; /* Makes only the body of the modal scrollable if content overflows. */
+}
+.results-list .result-item {
+    background: var(--panel-bg);
+    border-radius: 12px;
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out; /* Smooth transition for hover and selection. */
+}
+/* When a result item has the 'selected' class (added via JS), we change its appearance. */
+.results-list .result-item.selected {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-light);
+    transform: translateY(-2px); /* Lifts the card slightly. */
+}
+/* .result-item .top-row, .result-item .mid-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.result-item .bus-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.result-item .bus-icon {
+    font-size: 20px;
+    color: var(--accent-color);
+}
+.result-item .bus-number {
+    font-weight: 600;
+    font-size: 18px;
+}
+.result-item .arrival-time {
+    font-size: 14px;
+    color: var(--subtle-text);
+}
+.result-item .route-info {
+    font-size: 14px;
+}
+.route-info strong {
+    color: var(--text-color);
+}
+.route-info span {
+    color: var(--subtle-text);
+}
+.result-item .price {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+} */
+/* .confirm-btn {
+    width: 100%;
+    padding: 15px;
+    background: #48bb78; 
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+} */
+
+
+/* --- Google Maps Autocomplete --- */
+/* We override Google's default styles to match our theme.
+   The '!important' flag is sometimes necessary to override inline styles set by the Google script. */
+.pac-container {
+    border: none !important;
+    box-shadow: 0 8px 25px var(--shadow-color) !important;
+    border-radius: 12px !important;
+    margin-top: 10px;
+}
+.pac-item {
+    padding: 12px 16px;
+    font-size: 16px;
+    border: none !important;
+}
+.pac-item:hover {
+    background-color: var(--accent-light) !important;
+}
+.pac-item-query {
+    font-weight: 500;
+}
+.pac-matched {
+    font-weight: 600;
+}
+
+
+/* --- Notifications --- */
+/* These are the pop-up messages for errors or success. */
+.notification {
+    position: fixed; /* Stays in the same place even if the page scrolls. */
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%); /* This is a trick to horizontally center a fixed element. */
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 2000; /* Must be on top of the modal. */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.notification.error {
+    background: #fed7d7; color: #c53030;
+}
+.notification.success {
+    background: #c6f6d5; color: #2f855a;
+}
+
+/* --- Expandable Search Area --- */
+.search-area {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+}
+.search-area form {
+    width: 100%;
+    max-width: 420px;
+    pointer-events: auto;
+}
+.search-row {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    border: 2px solid #e2e8f0;
+    transition: box-shadow 0.2s, border 0.2s;
+}
+
+.search-row:focus-within {
+    box-shadow: 0 12px 36px 0 rgba(49,130,206,0.18);
+    border: 2px solid #3182ce;
+}
+
+.search-row input {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    color: #222;
+    width: 100%;
+    outline: none;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 0;
+}
+
+.search-row .search-icon {
+    font-size: 22px;
+    color: #3182ce;
+    margin-right: 12px;
+}
+
+.search-expanded {
+    background: var(--panel-bg);
+    border-radius: 16px;
+    box-shadow: 0 8px 25px var(--shadow-color);
+    margin-top: 8px;
+    padding: 18px 18px 10px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    animation: expandDown 0.3s cubic-bezier(.4,1.4,.6,1);
+}
+
+@keyframes expandDown {
+    from { opacity: 0; transform: translateY(-10px) scaleY(0.95); }
+    to   { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: var(--subtle-text);
+    font-weight: 500;
+}
+
+.input-group .search-input {
+    padding: 12px 40px 12px 12px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 16px;
+    background: #f7fafc;
+    transition: border 0.2s;
+}
+
+.input-group .search-input:focus {
+    border-color: var(--accent-color);
+    background: #fff;
+}
+
+.input-group .location-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-15%);
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+}
+
+.input-group .location-btn:hover {
+    background: var(--accent-light);
+}
+
+/* --- Floating Find Bus Button --- */
+.floating-btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 110px;
+    z-index: 20;
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 18px 38px;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(49,130,206,0.18);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    display: block;
+}
+
+.floating-btn:active {
+    background: #274b7a;
+}
+
+/* --- Travel Plans Overlay --- */
+/*
+/* */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.travel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 20px 10px 20px;
+    background: var(--panel-bg);
+    border-bottom: 1.5px solid var(--border-color);
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: var(--accent-color);
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.travel-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.travel-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 10px 90px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+/* 
+.travel-card {
+    background: var(--panel-bg);
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    padding: 18px 18px 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.travel-card.selected {
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 8px 24px rgba(49,130,206,0.13);
+}
+
+.travel-card .card-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+.travel-card .bus-icon {
+    font-size: 22px;
+    color: var(--accent-color);
+}
+
+.travel-card .route-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.travel-card .times {
+    font-size: 15px;
+    color: var(--subtle-text);
+}
+
+.travel-card .details {
+    display: flex;
+    gap: 18px;
+    font-size: 14px;
+    color: var(--subtle-text);
+}
+
+.travel-card .fare {
+    font-weight: 700;
+    color: #38a169;
+    font-size: 16px;
+} */
+
+.confirm-btn {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    max-width: 480px;
+    margin: 0 auto 0 auto;
+    background: #38a169;
+    color: #fff;
+    border: none;
+    border-radius: 18px 18px 0 0 ;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 22px 0 18px 0;
+    box-shadow: 0 -4px 24px rgba(56,161,105,0.13);
+    z-index: 1002;
+    display: block;
+    transition: background 0.4s;
+}
+
+.confirm-btn:active {
+    background: #276749;
+}
+
+/* --- Adjust Bottom Sheet for New Flow --- */
+#bottom-sheet.collapsed {
+    transform: translateY(260px);
+}
+
+#bottom-sheet.expanded {
+    transform: translateY(0);
+}
+
+/* --- Bottom Sheet Hidden --- */
+#bottom-sheet.hidden {
+    transform: translateY(calc(100% - 30px));
+}
+
+/* --- Hide Modal Overlay (legacy) --- */
+.modal-overlay { display: none !important; }
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    .search-area form { max-width: 98vw; }
+    .floating-btn { bottom: 90px; }
+    .confirm-btn { font-size: 16px; padding: 18px 0 14px 0; }
+}
+
+
+
+/* --- Bottom Button --- */
+.bottom-btn {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 80vw;
+    max-width: 480px;
+    margin: 0 auto 0 auto;
+    background: #cdcccc;
+    color: #a19d9d;
+    border: 1px dashed #878585; /* White border for separation */
+    border-radius: 24px;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 20px 0;
+    z-index: 1002;
+    display: block;
+    transition: 
+      background 0.2s,
+      box-shadow 0.2s,
+      transform 0.15s;
+    cursor: pointer;
+    pointer-events: auto;
+    transform: translateY(-50px);
+    /* Strong, blurred black shadow for floating effect */
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.35), 0 2px 8px 0 rgba(0,0,0,0.10);
+}
+
+.bottom-btn:active,
+.bottom-btn.enabled {
+    background: linear-gradient(90deg, #2563eb 0%, #3182ce 100%);
+    transform: translateY(-52px) scale(0.98);
+    color: #fff;
+    border: 1px solid #fff; /* White border for separation */
+}
+
+.bottom-btn:hover,
+.bottom-btn.enabled:hover {
+    box-shadow: 0 16px 48px 0 rgba(0,0,0,0.45), 0 4px 12px 0 rgba(0,0,0,0.13);
+    filter: brightness(1.08);
+}
+
+/* Remove floating-btn styles if present */
+.floating-btn { display: none !important; }
+
+/* Ensure overlay is above all */
+.overlay_screen{
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--bg-color);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s;
+} 
+
+/* .search-expanded: From above To */
+.search-expanded {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.search-expanded .input-group:first-child { order: 1; }
+.search-expanded .input-group:last-child { order: 2; }
+
+
+
+
+.route-card {
+    display: flex;
+    flex-direction: row;
+    background: var(--panel-bg, #fff);
+    border-radius: 16px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+    margin-bottom: 16px;
+    padding: 0;
+    overflow: hidden;
+    border: 1.5px solid var(--border-color, #EEEFEF);
+    min-height: 126px;
+    
+  }
+  
+  .route-card .left {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 13px 8px;
+    gap: 8px;
+    height: 100%;
+  }
+
+  .selected {
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 8px 24px rgba(49,130,206,0.13);
+}
+  
+  .route-card .up {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+
+  }
+  
+  .route-card .busname {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .route-card .busname .icon img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+  .route-card .busname .text {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-color, #222);
+  }
+  
+  .route-card .fare {
+    display: flex;
+    /* align-items: center; */
+    gap: 0px;
+  }
+  .route-card .rupeesign img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+  .route-card .faretext {
+    font-size: 16px;
+    font-weight: 700;
+    color: #38a169;
+  }
+  
+  .route-card .down {
+    height:58px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-ar;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
+    /* height: 100%; */
+  }
+  .route-card .details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--subtle-text, #718096);
+    width: 134px;
+    padding: 8px 0px;
+  }
+  .route-card .arrival {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .route-card .arrival .icon img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+  .route-card .duration {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .route-card .duration .icon img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+  .route-card .busroute {
+    display: flex;
+    align-items: center;
+    margin: 8px 2px ;
+    height: 100%;
+    flex-grow: 1;
+    border-radius: 6px;
+    /* width: 80%; */
+    justify-content: center;
+    /* background: #f5f4f4; */
+    /* border: #eeeeea 1px solid; */
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    
+
+  }
+  .route-card .center {
+    display: flex;
+    gap: 4px;
+    height: 100%;
+    align-items: center;
+    /* background: #000; */
+  }
+  .route-card .object {
+    width: 40px;
+    height: 40px;
+    background: var(--accent-color, #3182ce);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    /* margin: 0 2px; */
+  } 
+   .route-card .object img {
+    width: 50%;
+
+  }
+  
+  .route-card .object span {
+    font-size:10px;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  .route-card .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #FFA126;
+    max-width: 50px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent-color, #3182ce);
+    border-left: 1.5px solid var(--border-color, #e2e8f0);
+  }
+
+  .route-card .right span {
+    color: #fff;
+    font-family: 'Righteous', cursive;
+  }
+  .route-card .right span:first-child {
+    font-size: 32px;
+    font-weight: 700;
+  }
+  .route-card .right span:last-child {
+    font-size: 16px;
+    font-weight: normal;
+    /* color: var(--subtle-text, #718096); */
+  }
+    
+/* --- Loading and Error States --- */
+.loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--subtle-text);
+    font-size: 16px;
+}
+
+.loading::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top: 3px solid var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.no-routes {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--subtle-text);
+    font-size: 16px;
+}
+
+.no-routes::before {
+    content: '🚌';
+    display: block;
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.error {
+    text-align: center;
+    padding: 40px 20px;
+    color: #e53e3e;
+    font-size: 16px;
+}
+
+.error::before {
+    content: '⚠️';
+    display: block;
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+   
+
+#paynowscanner{
+    background: #022633;
+    background: linear-gradient(127deg, rgba(2, 38, 51, 1) 0%, rgba(71, 52, 4, 1) 0%, rgba(24, 29, 34, 1) 47%, rgba(3, 25, 64, 1) 100%);
+
+}
+
+#paynowscanner .upper {
+    display: flex;
+    flex-direction: column;
+    /* padding: 40px 0px; */
+    /* justify-content: center; */
+    align-items: center;
+    height: 100%;
+    gap: 100px;
+    
+
+}
+#paynowscanner .upper .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    z-index: 2;
+    mask-image: radial-gradient(circle at center, transparent 100px, black 300px);
+    /* -webkit-mask-image: radial-gradient(circle at center, transparent 100px, black 130px); */
+}
+/* 
+#paynowscanner .upper .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    pointer-events: none; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+  }
+  
+  #paynowscanner .upper .overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    -webkit-mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    
+    padding: 200px 100px; 
+    pointer-events: none;
+  }
+   */
+.scan-box {
+    width: 250px;
+    height: 250px;
+    border: 2px solid #00ffcc;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px #00ffcc;
+    border-radius: 8px;
+}
+
+
+#paynowscanner #bottom-sheet {
+    background: #ffffff2c;
+    color: #fff;
+    border: #fff .2px solid;
+}
+
+#paynowscanner .favourite-details small {
+
+    color: #fff8f8aa!important;
+ 
+}
+
+#paynowscanner .balance {
+    height: 40px;
+    width: 120px;
+    border: #fff .2px solid;
+    border-radius: 2vh;
+    position: absolute;
+    top: 10px;
+    background: #ffffff2c;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 2px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    
+}
+
+#paynowscanner .balance .balance-text{
+    /* position: absolute; */
+    top: 2px;
+    /* left: 10px; */
+    /* left: 50%; */
+    /* right: 50%; */
+    /* transform: translate(-50%, -50%); */
+
+    font-size: 8px;
+    color: #fff;
+    font-weight: 200;
+}
+#paynowscanner .balance .balance-amount{
+    /* position: absolute; */
+    /* top: 12px; */
+    /* left: 10px; */
+    /* left: 50%; */
+    /* right: 50%; */
+    /* transform: translate(-50%, -50%); */
+
+    font-size: 20px;
+    color: #fff;
+    font-weight: 200;
+}
+
+#paynowscanner .PaymentMenuScr {
+    width: 150px;
+    height: 43px;
+    border-radius: 20px;
+    border: #fff .2px solid;
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 4px 16px 0 rgba(79,140,255,0.15);
+    cursor: pointer;
+    background: #ffffff2c;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    outline: none;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+}
+
+#paynowscanner .PaymentMenuScr:hover {
+    background: linear-gradient(90deg, #38e8ff 0%, #4f8cff 100%);
+    box-shadow: 0 6px 24px 0 rgba(56,232,255,0.18);
+    transform: translateX(-50%) scale(1.04);
+}
+
+#paynowscanner .PaymentMenuScr:active {
+    background: linear-gradient(90deg, #3578e5 0%, #1fc8db 100%);
+    box-shadow: 0 2px 8px 0 rgba(56,232,255,0.10);
+    transform: translateX(-50%) scale(0.98);
+}
+
+#paynowscanner .PaymentMenuScr span {
+    font-family: 'Righteous', 'Roboto', sans-serif;
+    letter-spacing: 0.5px;
+    }
+
+#paynowscanner .scantopay{
+    position: absolute;
+    bottom: 120px;
+    font-size: 16px;
+    color: #ffffff4b;
+    font-weight: 200;
+    filter: blur(0.4px);
+    }
+
+#paynowscanner .back-btn, #backToMainBtn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 8px;
+    z-index: 10;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: background 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+#paynowscanner .back-btn:hover, #backToMainBtn:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+/* --- Enhanced Start Journey Overlay Styles --- */
+#confirmTrip.overlay_screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    background: #f7fafc;
+    z-index: 2002;
+    padding: 0;
+    overflow: hidden;
+    min-height: 100vh;
+}
+.confirm-trip-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 18px 8px 18px;
+    background: #fff;
+    border-bottom: 1.5px solid #e2e8f0;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 2px 12px 0 rgba(49,130,206,0.04);
+}
+.confirm-trip-header h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a202c;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+.confirm-trip-subtitle {
+    font-size: 15px;
+    color: #4a5568;
+    font-weight: 400;
+    margin: 0 18px 10px 54px;
+    line-height: 1.4;
+}
+#closeConfirmTrip.back-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #3182ce;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: background 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+#closeConfirmTrip.back-btn:hover {
+    background: rgba(49,130,206,0.08);
+}
+#confirmTrip .confirm-trip-map {
+    position: relative;
+    width: 92vw;
+    max-width: 480px;
+    height: 180px;
+    margin: 18px auto 0 auto;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(49,130,206,0.10);
+    overflow: hidden;
+    background: #e6f0fa;
+}
+#journeyMap {
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    min-height: 120px;
+}
+.map-placeholder {
+    color: #3182ce;
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.7;
+}
+.confirm-trip-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 18px 0 8px 0;
+}
+.confirm-trip-step {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #3182ce;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(49,130,206,0.07);
+    transition: background 0.2s, color 0.2s;
+}
+.confirm-trip-step.active {
+    background: linear-gradient(90deg, #3182ce 0%, #38a169 100%);
+    color: #fff;
+}
+.confirm-trip-cards {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 18px 10px 110px 10px;
+    background: #f7fafc;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.segment-card {
+    display: flex;
+    align-items: flex-start;
+    background: linear-gradient(90deg, #fff 80%, #f1f5f9 100%);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    padding: 18px 16px;
+    gap: 18px;
+    border-left: 6px solid #3182ce;
+    transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
+    position: relative;
+    min-height: 80px;
+}
+.segment-card.auto { border-color: #ffb300; background: linear-gradient(90deg, #fff 80%, #fffbe6 100%); }
+.segment-card.bus { border-color: #3182ce; background: linear-gradient(90deg, #fff 80%, #e6f0fa 100%); }
+.segment-card.walk { border-color: #38a169; background: linear-gradient(90deg, #fff 80%, #e6fae6 100%); }
+.segment-icon {
+    width: 48px;
+    height: 48px;
+    background: #f1f5f9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(49,130,206,0.07);
+    margin-top: 2px;
+}
+.segment-icon img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+.segment-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.segment-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 2px;
+}
+.segment-status {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    letter-spacing: 0.01em;
+}
+.segment-card.auto .segment-status { color: #ffb300; }
+.segment-card.bus .segment-status { color: #3182ce; }
+.segment-card.walk .segment-status { color: #38a169; }
+.segment-meta {
+    font-size: 13px;
+    color: #4a5568;
+    font-weight: 400;
+    margin-bottom: 1px;
+}
+.confirm-trip-btn {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    max-width: 480px;
+    margin: 0 auto 0 auto;
+    background: linear-gradient(90deg, #3182ce 0%, #38a169 100%);
+    color: #fff;
+    border: none;
+    border-radius: 18px 18px 0 0 ;
+    font-size: 20px;
+    font-weight: 800;
+    padding: 26px 0 22px 0;
+    box-shadow: 0 -4px 24px rgba(49,130,206,0.13);
+    z-index: 1002;
+    display: block;
+    transition: background 0.4s, transform 0.1s;
+    letter-spacing: 0.01em;
+    animation: pulseBtn 1.8s infinite alternate;
+}
+.confirm-trip-btn:active {
+    background: linear-gradient(90deg, #276749 0%, #3182ce 100%);
+    transform: scale(0.98);
+}
+
+
+
+
+
+
+
+#PaymentMenuScr{
+    background: #022633;
+    background: linear-gradient(127deg, #022633 0%, #473404 0%, #181d22 47%, #031940 100%);
+
+}
+
+#PaymentMenuScr .wrapper {
+    display: flex;
+    flex-direction: column;
+    /* padding: 40px 0px; */
+    /* justify-content: center; */
+    align-items: center;
+    height: 70%;
+    width: 100%;
+    gap: 100px;
+    color: #fff;
+    z-index: 2;
+    position: relative;
+    
+
+}
+/* #PaymentMenuScr .wrapper .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    z-index: 2;
+} */
+/* 
+#paynowscanner .wrapper .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    pointer-events: none; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+  }
+  
+  #paynowscanner .wrapper .overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    -webkit-mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    
+    padding: 200px 100px; 
+    pointer-events: none;
+  }
+   */
+
+
+#PaymentMenuScr #bottom-sheet {
+    position: absolute;
+    background: #ffffff2c;
+    color: #fff;
+    border: #fff .2px solid;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+#PaymentMenuScr .favourite-details small {
+
+    color: #fff8f8aa!important;
+ 
+}
+
+#PaymentMenuScr .balance {
+    height: 80px;
+    width: 240px;
+    border: #fff .2px solid;
+    border-radius: 2vh;
+    position: absolute;
+    top: 20px;
+    background: #ffffff2c;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    
+}
+
+#PaymentMenuScr .balance .balance-text{
+    top: 2px;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 200;
+}
+#PaymentMenuScr .balance .balance-amount{
+
+
+    font-size: 40px;
+    color: #fff;
+    font-weight: 200;
+}
+
+
+#PaymentMenuScr .card-container{
+    position: absolute;
+    bottom: 70px;
+}
+
+#PaymentMenuScr .card{
+    border: #fff .2px solid;
+    background: #ffffff2c;}
+
+
+#PaymentMenuScr .back-btn, #backToMainBtn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 8px;
+    z-index: 10;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: background 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+#PaymentMenuScr .back-btn:hover, #backToMainBtn:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+
+@keyframes pulseBtn {
+    0% { box-shadow: 0 -4px 24px rgba(49,130,206,0.13); }
+    100% { box-shadow: 0 -8px 32px rgba(56,161,105,0.18); }
+}
+@media (max-width: 600px) {
+    .confirm-trip-header { padding: 16px 10px 8px 10px; }
+    .confirm-trip-map { height: 120px; }
+    .confirm-trip-cards { padding: 10px 4px 90px 4px; }
+    .segment-card { padding: 13px 8px; gap: 10px; }
+    .segment-title { font-size: 15px; }
+    .confirm-trip-btn { font-size: 17px; padding: 18px 0 12px 0; }
+    #journeyMap { min-height: 80px; }
+}
+
+
